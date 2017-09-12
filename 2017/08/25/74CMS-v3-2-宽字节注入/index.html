@@ -6,14 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://bypupil.github.io">
-  <title>Archives: 2017/9 | ByPupil&#39;s blog</title>
+  <title>74CMS v3.2 - 宽字节注入 | ByPupil&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ByPupil&#39;s blog">
-<meta property="og:url" content="https://bypupil.github.io/archives/2017/09/index.html">
+  <meta name="description" content="0x00 前言这个74CMS也是靶场之一，其实本这来这儿是做了过滤的。因为需求有一个注入，机智的我直接改了编码。让这儿产生一个宽字节注入。 0x01 漏洞解析产生此次注入漏洞的关键一点是：使用了GBK的编码。   请求方式：POST 触发点：admin_login.php?act=do_login Payload：admin_name=123%df&amp;#39; or 1=1%23&amp;amp;admin">
+<meta name="keywords" content="代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="74CMS v3.2 - 宽字节注入">
+<meta property="og:url" content="https://bypupil.github.io/2017/08/25/74CMS-v3-2-宽字节注入/index.html">
 <meta property="og:site_name" content="ByPupil&#39;s blog">
+<meta property="og:description" content="0x00 前言这个74CMS也是靶场之一，其实本这来这儿是做了过滤的。因为需求有一个注入，机智的我直接改了编码。让这儿产生一个宽字节注入。 0x01 漏洞解析产生此次注入漏洞的关键一点是：使用了GBK的编码。   请求方式：POST 触发点：admin_login.php?act=do_login Payload：admin_name=123%df&amp;#39; or 1=1%23&amp;amp;admin">
+<meta property="og:image" content="https://bypupil.github.io/2017/08/25/74CMS-v3-2-宽字节注入/1.png">
+<meta property="og:image" content="https://bypupil.github.io/2017/08/25/74CMS-v3-2-宽字节注入/2.png">
+<meta property="og:image" content="https://bypupil.github.io/2017/08/25/74CMS-v3-2-宽字节注入/3.png">
+<meta property="og:image" content="https://bypupil.github.io/2017/08/25/74CMS-v3-2-宽字节注入/4.png">
+<meta property="og:image" content="https://bypupil.github.io/2017/08/25/74CMS-v3-2-宽字节注入/5.png">
+<meta property="og:updated_time" content="2017-09-11T16:35:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ByPupil&#39;s blog">
+<meta name="twitter:title" content="74CMS v3.2 - 宽字节注入">
+<meta name="twitter:description" content="0x00 前言这个74CMS也是靶场之一，其实本这来这儿是做了过滤的。因为需求有一个注入，机智的我直接改了编码。让这儿产生一个宽字节注入。 0x01 漏洞解析产生此次注入漏洞的关键一点是：使用了GBK的编码。   请求方式：POST 触发点：admin_login.php?act=do_login Payload：admin_name=123%df&amp;#39; or 1=1%23&amp;amp;admin">
+<meta name="twitter:image" content="https://bypupil.github.io/2017/08/25/74CMS-v3-2-宽字节注入/1.png">
   
     <link rel="alternative" href="/atom.xml" title="ByPupil&#39;s blog" type="application/atom+xml">
   
@@ -149,60 +160,197 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-74CMS-v3-2-宽字节注入" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/11/南邮CTF综合题2WriteUp/" class="archive-article-date">
-  	<time datetime="2017-09-10T16:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-11</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/11/南邮CTF综合题2WriteUp/">南邮CTF综合题2WriteUp</a>
+    <h1 class="article-title" itemprop="name">
+      74CMS v3.2 - 宽字节注入
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/08/25/74CMS-v3-2-宽字节注入/" class="archive-article-date">
+  	<time datetime="2017-08-24T16:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>这个<code>74CMS</code>也是靶场之一，其实本这来这儿是做了过滤的。因为需求有一个注入，机智的我直接改了编码。让这儿产生一个宽字节注入。</p>
+<h3 id="0x01-漏洞解析"><a href="#0x01-漏洞解析" class="headerlink" title="0x01 漏洞解析"></a>0x01 漏洞解析</h3><p>产生此次注入漏洞的关键一点是：使用了GBK的编码。</p>
+<img src="/2017/08/25/74CMS-v3-2-宽字节注入/1.png" alt="ByPupil" title="ByPupil">
+<img src="/2017/08/25/74CMS-v3-2-宽字节注入/2.png" alt="ByPupil" title="ByPupil">
+<p><strong>请求方式：</strong><code>POST</code></p>
+<p><strong>触发点：</strong><code>admin_login.php?act=do_login</code></p>
+<p><strong>Payload：</strong><code>admin_name=123%df&#39; or 1=1%23&amp;admin_pwd=1</code></p>
+<p><strong>详情：</strong></p>
+<p>通过触发点，我们定位到了<code>admin_login.php</code>这个文件。<code>act=do_login</code>在页面的第42行。在认识到前提这是一个<strong>宽字节的SQL注入</strong>，所以在整个回溯过程中必定是可以找到<code>magic_quotes_gpc</code>，<code>addslashes</code>进行转义，会在单引号之前添加<code>\</code>进行转义。在审计过程中，确实发现在文件<code>admin_common.inc.php</code>中有着全局过滤。</p>
+<img src="/2017/08/25/74CMS-v3-2-宽字节注入/3.png" alt="ByPupil" title="ByPupil">
+<p>这儿首先判断是否开启了<code>get_magic_quotes_gpc</code>，如果没有开启<code>get_magic_quotes_gpc</code>，那么会调用<code>admin_addslashes_deep</code>函数进行过滤。回溯<code>admin_addslashes_deep</code>发现函数位于<code>admin_common.fun.php</code>的16行。</p>
+<img src="/2017/08/25/74CMS-v3-2-宽字节注入/4.png" alt="ByPupil" title="ByPupil">
+<p>在不为空的情况下，将其所有值使用<code>addslashes</code>函数进行过滤。</p>
+<p>如果我们传入<code>admin_name=123%df&#39;</code>时，就能够将<code>&#39;</code>进行逃逸出来。接着继续跟踪代码，在<code>admin_login.php</code>的73行开始进行账号密码验证了，此处调用了<code>check_admin</code>函数进行检测。<code>check_admin</code>函数的详情在<code>admin_common.fun.php</code>中。</p>
+<img src="/2017/08/25/74CMS-v3-2-宽字节注入/5.png" alt="ByPupil" title="ByPupil">
+<p>核心的sql语句在这儿开始出现了：</p>
+<p><code>SELECT COUNT(*) AS num FROM admin WHERE admin_name=&#39;$name&#39; and pwd=&#39;$pass&#39;</code></p>
+<p>我们这儿可以传入<code>123%df&#39;%23</code>，那么整条sql语句就会改变成如下：</p>
+<p><code>SELECT COUNT(*) AS num FROM admin WHERE admin_name=&#39;123運&#39;#&#39; and pwd=&#39;$pass&#39;</code></p>
+<p>使用payload：<code>admin_name=123%df&#39; or 1=1 %23</code></p>
+<p><code>SELECT COUNT(*) AS num FROM admin WHERE admin_name=&#39;123運&#39; or 1=1 #&#39; and pwd=&#39;$pass&#39;</code></p>
+<h3 id="0x02-总结"><a href="#0x02-总结" class="headerlink" title="0x02 总结"></a>0x02 总结</h3><p>原本程序其实已经做了相对多的过滤规则了，然后因为设计靶机的时将连接数据库的字符集修改成了gbk，导致了宽字节注入。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码审计</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://bypupil.github.io/2017/08/25/74CMS-v3-2-宽字节注入/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/09/11/南邮CTF综合题2WriteUp/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          南邮CTF综合题2WriteUp
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/08/23/FineCMS-v5-0-10任意文件上传/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">FineCMS v5.0.10任意文件上传</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -225,8 +373,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

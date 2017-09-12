@@ -6,14 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://bypupil.github.io">
-  <title>Archives: 2017/9 | ByPupil&#39;s blog</title>
+  <title>南邮CTF综合题2WriteUp | ByPupil&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ByPupil&#39;s blog">
-<meta property="og:url" content="https://bypupil.github.io/archives/2017/09/index.html">
+  <meta name="description" content="0x00 前言由于这道题目能够读取源码，很开的我将它收入到了我的CTFHub中。CTFHub这个项目是我前几天突然的冲动就让他诞生了。简单介绍下，CTFHub是面向所有学习CTF的朋友的环境，不用了解docker原理及知识，仅仅简单执行几条命令即可完成整个平台的搭建。方便大家去做一些已经没有在线环境的挑战题。当然，师傅们有什么好的题目也可以通过该项目中的邮箱联系我。在这儿谢谢将来未这个项目共同努力">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="南邮CTF综合题2WriteUp">
+<meta property="og:url" content="https://bypupil.github.io/2017/09/11/南邮CTF综合题2WriteUp/index.html">
 <meta property="og:site_name" content="ByPupil&#39;s blog">
+<meta property="og:description" content="0x00 前言由于这道题目能够读取源码，很开的我将它收入到了我的CTFHub中。CTFHub这个项目是我前几天突然的冲动就让他诞生了。简单介绍下，CTFHub是面向所有学习CTF的朋友的环境，不用了解docker原理及知识，仅仅简单执行几条命令即可完成整个平台的搭建。方便大家去做一些已经没有在线环境的挑战题。当然，师傅们有什么好的题目也可以通过该项目中的邮箱联系我。在这儿谢谢将来未这个项目共同努力">
+<meta property="og:image" content="https://bypupil.github.io/2017/09/11/南邮CTF综合题2WriteUp/1.png">
+<meta property="og:image" content="https://bypupil.github.io/2017/09/11/南邮CTF综合题2WriteUp/2.png">
+<meta property="og:updated_time" content="2017-09-11T03:15:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ByPupil&#39;s blog">
+<meta name="twitter:title" content="南邮CTF综合题2WriteUp">
+<meta name="twitter:description" content="0x00 前言由于这道题目能够读取源码，很开的我将它收入到了我的CTFHub中。CTFHub这个项目是我前几天突然的冲动就让他诞生了。简单介绍下，CTFHub是面向所有学习CTF的朋友的环境，不用了解docker原理及知识，仅仅简单执行几条命令即可完成整个平台的搭建。方便大家去做一些已经没有在线环境的挑战题。当然，师傅们有什么好的题目也可以通过该项目中的邮箱联系我。在这儿谢谢将来未这个项目共同努力">
+<meta name="twitter:image" content="https://bypupil.github.io/2017/09/11/南邮CTF综合题2WriteUp/1.png">
   
     <link rel="alternative" href="/atom.xml" title="ByPupil&#39;s blog" type="application/atom+xml">
   
@@ -149,36 +157,81 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-南邮CTF综合题2WriteUp" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/11/南邮CTF综合题2WriteUp/" class="archive-article-date">
-  	<time datetime="2017-09-10T16:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-11</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/11/南邮CTF综合题2WriteUp/">南邮CTF综合题2WriteUp</a>
+    <h1 class="article-title" itemprop="name">
+      南邮CTF综合题2WriteUp
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/09/11/南邮CTF综合题2WriteUp/" class="archive-article-date">
+  	<time datetime="2017-09-10T16:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>由于这道题目能够读取源码，很开的我将它收入到了我的<a href="https://github.com/ByPupil/ctfhub" target="_blank" rel="external">CTFHub</a>中。<a href="https://github.com/ByPupil/ctfhub" target="_blank" rel="external">CTFHub</a>这个项目是我前几天突然的冲动就让他诞生了。简单介绍下，<a href="https://github.com/ByPupil/ctfhub" target="_blank" rel="external">CTFHub</a>是面向所有学习CTF的朋友的环境，不用了解docker原理及知识，仅仅简单执行几条命令即可完成整个平台的搭建。方便大家去做一些已经没有在线环境的挑战题。当然，师傅们有什么好的题目也可以通过该项目中的邮箱联系我。在这儿谢谢将来未这个项目共同努力的朋友们。</p>
+<h3 id="0x01-信息收集"><a href="#0x01-信息收集" class="headerlink" title="0x01 信息收集"></a>0x01 信息收集</h3><p>首先，访问了主页，这是一个留言板的项目。根据题目描述这是一道非xss的题目。所以直接放弃怼xss。</p>
+<img src="/2017/09/11/南邮CTF综合题2WriteUp/1.png" alt="Bypupil" title="Bypupil">
+<p>通过首页的信息，我们获取到该文章存在的如下页面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/index.php</div><div class="line">/preview.php</div><div class="line">/about.php</div><div class="line">/say.php</div><div class="line">/so.php</div></pre></td></tr></table></figure>
+<p>在页面的最下放有一个<strong>本CMS说明</strong>，通过该文件和之前的信息，我们可以知道该系统存在如下文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">config.php：存放数据库信息</div><div class="line">index.php：主页文件</div><div class="line">passencode.php：Funny公司自写密码加密算法库</div><div class="line">say.php：用于接收和处理用户留言请求</div><div class="line">sm.txt：本CMS的说明文档</div><div class="line">preview.php：留言提交的接口</div><div class="line">about.php：文件读取的接口</div><div class="line">so.php：留言查询的接口</div></pre></td></tr></table></figure>
+<p>且了解到数据库中存在<code>admin</code>数据表。</p>
+<p>通过观察<strong>本CMS说明</strong>的链接<code>http://cms.nuptzj.cn/about.php?file=sm.txt</code>是一个文件读取链接。通过尝试，在已知的链接中除<code>config.php</code>的文件内容不能获取，其他文件都可以获取到源代码。</p>
+<p>为了节省篇幅<code>index.php</code>源码就不粘贴了，因为没有可利用的地方。</p>
+<p><code>passencode.php</code>源码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">passencode</span><span class="params">($content)</span> </span>&#123;</div><div class="line">    <span class="comment">//$pass=urlencode($content);</span></div><div class="line">    $array = str_split($content);</div><div class="line">    $pass = <span class="string">""</span>;</div><div class="line">    <span class="keyword">for</span> ($i = <span class="number">0</span>;$i &lt; count($array);$i++) &#123;</div><div class="line">        <span class="keyword">if</span> ($pass != <span class="string">""</span>) &#123;</div><div class="line">            $pass = $pass . <span class="string">" "</span> . (string)ord($array[$i]);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            $pass = (string)ord($array[$i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $pass;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>加密部分就是将密码的ASCII码保存了。</p>
+<p><code>about.php</code>源码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"Content-Type"</span> content=<span class="string">"text/html; charset=utf-8"</span> /&gt;</div><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$file = $_GET[<span class="string">'file'</span>];</div><div class="line"><span class="keyword">if</span> ($file == <span class="string">""</span> || strstr($file, <span class="string">'config.php'</span>)) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"file参数不能为空！"</span>;</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    $cut = strchr($file, <span class="string">"loginxlcteam"</span>);</div><div class="line">    <span class="keyword">if</span> ($cut == <span class="keyword">false</span>) &#123;</div><div class="line">        $data = file_get_contents($file);</div><div class="line">        $date = htmlspecialchars($data);</div><div class="line">        <span class="keyword">echo</span> $date;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"&lt;script&gt;alert('敏感目录，禁止查看！但是。。。')&lt;/script&gt;"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过<code>about.php</code>可以知道另一个敏感敏感目录<code>loginxlcteam</code>。</p>
+<p>访问后发现是一个登录页面，爆破了下若密码和万能密码都没有成功。</p>
+<img src="/2017/09/11/南邮CTF综合题2WriteUp/2.png" alt="ByPupil" title="ByPupil">
+<h3 id="0x02-漏洞发现"><a href="#0x02-漏洞发现" class="headerlink" title="0x02 漏洞发现"></a>0x02 漏洞发现</h3><p><code>so.php</code>源码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="keyword">if</span>($_SERVER[<span class="string">'HTTP_USER_AGENT'</span>]!=<span class="string">"Xlcteam Browser"</span>)&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'万恶滴黑阔，本功能只有用本公司开发的浏览器才可以用喔~'</span>;</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125;</div><div class="line">$id=$_POST[<span class="string">'soid'</span>];</div><div class="line"><span class="keyword">include</span> <span class="string">'config.php'</span>;</div><div class="line"><span class="keyword">include</span> <span class="string">'antiinject.php'</span>;</div><div class="line"><span class="keyword">include</span> <span class="string">'antixss.php'</span>;</div><div class="line">$id=antiinject($id);</div><div class="line">$con = mysql_connect($db_address,$db_user,$db_pass) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"不能连接到数据库！"</span>.mysql_error());</div><div class="line">mysql_select_db($db_name,$con);</div><div class="line">$id=mysql_real_escape_string($id);</div><div class="line">$result=mysql_query(<span class="string">"SELECT * FROM `message` WHERE display=1 AND id=$id"</span>);</div><div class="line">$rs=mysql_fetch_array($result);</div><div class="line"><span class="keyword">echo</span> htmlspecialchars($rs[<span class="string">'nice'</span>]).<span class="string">':&amp;lt;br /&amp;gt;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;'</span>.antixss($rs[<span class="string">'say'</span>]).<span class="string">'&amp;lt;br /&amp;gt;'</span>;</div><div class="line">mysql_free_result($result);</div><div class="line">mysql_free_result($file);</div><div class="line">mysql_close($con);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>这儿的<code>$id</code>参数可能存在注入，通过源码发现还存在<code>antiinject.php</code>和<code>antixss.php</code>。继续读其他文件的源码。</p>
+<p><code>antiinject.php</code>源码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">antiinject</span><span class="params">($content)</span></span>&#123; </div><div class="line">    $keyword=<span class="keyword">array</span>(<span class="string">"select"</span>,<span class="string">"union"</span>,<span class="string">"and"</span>,<span class="string">"from"</span>,<span class="string">' '</span>,<span class="string">"'"</span>,<span class="string">";"</span>,<span class="string">'"'</span>,<span class="string">"char"</span>,<span class="string">"or"</span>,<span class="string">"count"</span>,<span class="string">"master"</span>,<span class="string">"name"</span>,<span class="string">"pass"</span>,<span class="string">"admin"</span>,<span class="string">"+"</span>,<span class="string">"-"</span>,<span class="string">"order"</span>,<span class="string">"="</span>);</div><div class="line">     $info=strtolower($content); </div><div class="line">     <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;=count($keyword);$i++)&#123; </div><div class="line">        $info=str_replace($keyword[$i], <span class="string">''</span>,$info); </div><div class="line">    &#125; <span class="keyword">return</span> $info; </div><div class="line">&#125; </div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>这是一个基于黑名单的过滤函数，将所有的关键字转换位空。我们马上可以想到使用关键字嵌套的方式可以绕过。在<code>so.php</code>中使用了<code>mysql_real_escape_string</code>。</p>
+<p>它只转义 <strong>\x00、\n、\r、\、’、”、\x1a</strong>字符，这人使用的整型注入。</p>
+<p>根据之前信息收集，我们之后数据库中存在<code>admin</code>数据表。所以我们需要将<code>admin</code>表中的记录读取出来。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -190,19 +243,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://bypupil.github.io/2017/09/11/南邮CTF综合题2WriteUp/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/08/25/74CMS-v3-2-宽字节注入/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">74CMS v3.2 - 宽字节注入</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -225,8 +365,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
