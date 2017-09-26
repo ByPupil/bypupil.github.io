@@ -9,7 +9,7 @@
   <title>FineCMS v5.0.10任意文件上传 | ByPupil&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="0x00 前言最近设计靶场环境，找了一个FineCMS放了上去，网上搜索该CMS漏洞，找到了任意文件上传。只有利用的技巧，却没有找到实际发生任意文件上传的触发点以及不安全的代码。 0x01 漏洞解析请求方式：POST 触发点：/index.php?s=member&amp;amp;c=account&amp;amp;m=upload&amp;amp;iajax=1 利用： 1234567注册用户登录用户生成图片木马在头像">
-<meta name="keywords" content="代码审计">
+<meta name="keywords" content="code audit">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FineCMS v5.0.10任意文件上传">
 <meta property="og:url" content="https://bypupil.github.io/2017/08/23/FineCMS-v5-0-10任意文件上传/index.html">
@@ -17,7 +17,7 @@
 <meta property="og:description" content="0x00 前言最近设计靶场环境，找了一个FineCMS放了上去，网上搜索该CMS漏洞，找到了任意文件上传。只有利用的技巧，却没有找到实际发生任意文件上传的触发点以及不安全的代码。 0x01 漏洞解析请求方式：POST 触发点：/index.php?s=member&amp;amp;c=account&amp;amp;m=upload&amp;amp;iajax=1 利用： 1234567注册用户登录用户生成图片木马在头像">
 <meta property="og:image" content="https://bypupil.github.io/2017/08/23/FineCMS-v5-0-10任意文件上传/1.png">
 <meta property="og:image" content="https://bypupil.github.io/2017/08/23/FineCMS-v5-0-10任意文件上传/2.png">
-<meta property="og:updated_time" content="2017-09-11T16:24:03.000Z">
+<meta property="og:updated_time" content="2017-09-24T09:27:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FineCMS v5.0.10任意文件上传">
 <meta name="twitter:description" content="0x00 前言最近设计靶场环境，找了一个FineCMS放了上去，网上搜索该CMS漏洞，找到了任意文件上传。只有利用的技巧，却没有找到实际发生任意文件上传的触发点以及不安全的代码。 0x01 漏洞解析请求方式：POST 触发点：/index.php?s=member&amp;amp;c=account&amp;amp;m=upload&amp;amp;iajax=1 利用： 1234567注册用户登录用户生成图片木马在头像">
@@ -225,7 +225,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码审计</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">code audit</a>
         		</li>
       		
 		</ul>
@@ -427,7 +427,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码审计</a>
+                <a href="javascript:void(0)" class="js-tag color1">code audit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">programme</a>
               </li>
              
               <li class="article-tag-list-item">
