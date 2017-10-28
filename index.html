@@ -151,6 +151,182 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-中国菜刀在Linux下飞" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/28/中国菜刀在Linux下飞/">中国菜刀在Linux下飞</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/28/中国菜刀在Linux下飞/" class="archive-article-date">
+  	<time datetime="2017-10-28T11:12:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>由于一朋友习惯了ubuntu，突然遇到使用了菜刀连接webshell的时候无奈了。先推荐他使用了<code>weevely</code>连接webshell，但是只能连接php。晚上的时候找了些资料，发现可以使用<code>wine</code>让菜刀在<code>Linux</code>中跑起来。</p>
+<h3 id="0x01-准备"><a href="#0x01-准备" class="headerlink" title="0x01 准备"></a>0x01 准备</h3><ol>
+<li>Kali 2.0</li>
+<li>中国菜刀</li>
+</ol>
+<h3 id="0x02-开始动手"><a href="#0x02-开始动手" class="headerlink" title="0x02 开始动手"></a>0x02 开始动手</h3><p>想也不用想第一步当然是需要将<code>wine</code>安装进系统，然而系统中已经安装了<code>wine</code>。我使用的kali是2017版本的，已经安装的<code>wine</code>的版本是<code>2.0.2</code>。</p>
+<p>第二步是需要安装<code>winetricks</code>。通过命令<code>apt-get install winetricks</code>即可完成<code>winetricks</code>的安装。然后安装菜刀需要的一些dll库。需要安装的类库如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.mfc42</div><div class="line">2.mdac28</div><div class="line">3.jet40</div><div class="line">4.vb6run</div></pre></td></tr></table></figure>
+<p>在正式开始安装这些程序之前会提示需要安装<code>wine32</code>。然后给出了一条命令解决方案。</p>
+<p><code>dpkg --add-architecture i386 &amp;&amp; apt-get update &amp;&amp; apt-get install wine32</code></p>
+<p>安装完之后我们就可以依次执行以下命令安装依赖包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. winetricks mfc42</div><div class="line">2. winetricks mdac28</div><div class="line">3. winetricks jet40</div><div class="line">4. winetricks vb6ru</div></pre></td></tr></table></figure>
+<p>安装完相关的依赖包之后，就可以将菜刀复制到<code>kali</code>中了。使用命令<code>wine caidao.exe</code>。就可以执行菜刀。</p>
+<p>别说读书少，我骗人。有图有真相，┑(￣▽ ￣)┍。</p>
+<img src="/2017/10/28/中国菜刀在Linux下飞/1.png" alt="ByPupil" title="ByPupil">
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/28/中国菜刀在Linux下飞/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-曾经就该做的程序设计-LeetCode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/22/曾经就该做的程序设计-LeetCode/">曾经就该做的程序设计--LeetCode</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/22/曾经就该做的程序设计-LeetCode/" class="archive-article-date">
+  	<time datetime="2017-10-22T08:16:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>我是连数据结构还不怎么扎实的菜鸡，写程序也不考虑时间复杂度，辅助变量占用了多少程序。只要完成自己的需求就可以了。然而重回大一时，老师所说的程序首先需要满足以下几点：</p>
+<ul>
+<li>有穷性</li>
+<li>确定性</li>
+<li>可行性</li>
+<li>输入</li>
+<li>输出</li>
+</ul>
+<p>对于一个可以满足需求的程序是可以满足以上五点要求的。其实不然，一个好的程序，依然还需要考虑的是高效率和低存储。看着之前的代码，本可O(n)解决的写成了O(n^2)。纪念我如此之蠢，开始LeetCode的刷题和学习之路。</p>
+<p>本文所使用的所有代码全部使用<code>Python</code>语言编写，代码是根据自己理解和互联网上查找资料，写下自己觉得比较好的代码。</p>
+<h3 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h3><p><strong>1. Two Sum</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">twoSum</span><span class="params">(nums, target)</span>:</span></div><div class="line">  <span class="string">"""</span></div><div class="line"><span class="string">  :type nums: List[int]</span></div><div class="line"><span class="string">  :type target: int</span></div><div class="line"><span class="string">  :rtype List[int]</span></div><div class="line"><span class="string">  """</span></div><div class="line">  <span class="keyword">for</span> i, first <span class="keyword">in</span> enumerate(nums):</div><div class="line">    second = target - first</div><div class="line">    <span class="keyword">if</span> second <span class="keyword">in</span> nums[i+<span class="number">1</span>:]:</div><div class="line">      j = nums[i+<span class="number">1</span>:].index(second) + i + <span class="number">1</span></div><div class="line">      <span class="keyword">return</span> [i, j]</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">twoSum</span><span class="params">(nums, target)</span>:</span></div><div class="line">  <span class="string">"""</span></div><div class="line"><span class="string">  :type nums: List[int]</span></div><div class="line"><span class="string">  :type target: int</span></div><div class="line"><span class="string">  :rtype List[int]</span></div><div class="line"><span class="string">  """</span></div><div class="line">  dic = dict()</div><div class="line">  <span class="keyword">for</span> index, value <span class="keyword">in</span> enumerate(nums):</div><div class="line">    sub = target - value</div><div class="line">    <span class="keyword">if</span> sub <span class="keyword">in</span> dic:</div><div class="line">      <span class="keyword">return</span> [dic[sub], index]</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">      dic[value] = index</div></pre></td></tr></table></figure>
+<p><strong>2. Remove Element</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">removeElement</span><span class="params">(nums, val)</span>:</span></div><div class="line">  j = <span class="number">0</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(nums)):</div><div class="line">    <span class="keyword">if</span> nums[i] == val:</div><div class="line">      <span class="keyword">continue</span></div><div class="line">    nums[j] = nums[i]</div><div class="line">    j++</div><div class="line">  <span class="keyword">return</span> j</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">程序设计</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/22/曾经就该做的程序设计-LeetCode/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-不会编程的大四狗" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -842,6 +1018,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">程序设计</a>
               </li>
             
             <div class="clearfix"></div>

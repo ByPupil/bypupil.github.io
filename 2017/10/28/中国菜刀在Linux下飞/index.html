@@ -6,14 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://bypupil.github.io">
-  <title>Tag: code audit | ByPupil&#39;s blog</title>
+  <title>中国菜刀在Linux下飞 | ByPupil&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ByPupil&#39;s blog">
-<meta property="og:url" content="https://bypupil.github.io/tags/code-audit/index.html">
+  <meta name="description" content="0x00 前言由于一朋友习惯了ubuntu，突然遇到使用了菜刀连接webshell的时候无奈了。先推荐他使用了weevely连接webshell，但是只能连接php。晚上的时候找了些资料，发现可以使用wine让菜刀在Linux中跑起来。 0x01 准备 Kali 2.0 中国菜刀  0x02 开始动手想也不用想第一步当然是需要将wine安装进系统，然而系统中已经安装了wine。我使用的kali是2">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中国菜刀在Linux下飞">
+<meta property="og:url" content="https://bypupil.github.io/2017/10/28/中国菜刀在Linux下飞/index.html">
 <meta property="og:site_name" content="ByPupil&#39;s blog">
+<meta property="og:description" content="0x00 前言由于一朋友习惯了ubuntu，突然遇到使用了菜刀连接webshell的时候无奈了。先推荐他使用了weevely连接webshell，但是只能连接php。晚上的时候找了些资料，发现可以使用wine让菜刀在Linux中跑起来。 0x01 准备 Kali 2.0 中国菜刀  0x02 开始动手想也不用想第一步当然是需要将wine安装进系统，然而系统中已经安装了wine。我使用的kali是2">
+<meta property="og:image" content="https://bypupil.github.io/2017/10/28/中国菜刀在Linux下飞/1.png">
+<meta property="og:updated_time" content="2017-10-28T11:50:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ByPupil&#39;s blog">
+<meta name="twitter:title" content="中国菜刀在Linux下飞">
+<meta name="twitter:description" content="0x00 前言由于一朋友习惯了ubuntu，突然遇到使用了菜刀连接webshell的时候无奈了。先推荐他使用了weevely连接webshell，但是只能连接php。晚上的时候找了些资料，发现可以使用wine让菜刀在Linux中跑起来。 0x01 准备 Kali 2.0 中国菜刀  0x02 开始动手想也不用想第一步当然是需要将wine安装进系统，然而系统中已经安装了wine。我使用的kali是2">
+<meta name="twitter:image" content="https://bypupil.github.io/2017/10/28/中国菜刀在Linux下飞/1.png">
   
     <link rel="alternative" href="/atom.xml" title="ByPupil&#39;s blog" type="application/atom+xml">
   
@@ -149,136 +156,181 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-中国菜刀在Linux下飞" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      中国菜刀在Linux下飞
+    </h1>
+  
+
+        
+        <a href="/2017/10/28/中国菜刀在Linux下飞/" class="archive-article-date">
+  	<time datetime="2017-10-28T11:12:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-28</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>由于一朋友习惯了ubuntu，突然遇到使用了菜刀连接webshell的时候无奈了。先推荐他使用了<code>weevely</code>连接webshell，但是只能连接php。晚上的时候找了些资料，发现可以使用<code>wine</code>让菜刀在<code>Linux</code>中跑起来。</p>
+<h3 id="0x01-准备"><a href="#0x01-准备" class="headerlink" title="0x01 准备"></a>0x01 准备</h3><ol>
+<li>Kali 2.0</li>
+<li>中国菜刀</li>
+</ol>
+<h3 id="0x02-开始动手"><a href="#0x02-开始动手" class="headerlink" title="0x02 开始动手"></a>0x02 开始动手</h3><p>想也不用想第一步当然是需要将<code>wine</code>安装进系统，然而系统中已经安装了<code>wine</code>。我使用的kali是2017版本的，已经安装的<code>wine</code>的版本是<code>2.0.2</code>。</p>
+<p>第二步是需要安装<code>winetricks</code>。通过命令<code>apt-get install winetricks</code>即可完成<code>winetricks</code>的安装。然后安装菜刀需要的一些dll库。需要安装的类库如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.mfc42</div><div class="line">2.mdac28</div><div class="line">3.jet40</div><div class="line">4.vb6run</div></pre></td></tr></table></figure>
+<p>在正式开始安装这些程序之前会提示需要安装<code>wine32</code>。然后给出了一条命令解决方案。</p>
+<p><code>dpkg --add-architecture i386 &amp;&amp; apt-get update &amp;&amp; apt-get install wine32</code></p>
+<p>安装完之后我们就可以依次执行以下命令安装依赖包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. winetricks mfc42</div><div class="line">2. winetricks mdac28</div><div class="line">3. winetricks jet40</div><div class="line">4. winetricks vb6ru</div></pre></td></tr></table></figure>
+<p>安装完相关的依赖包之后，就可以将菜刀复制到<code>kali</code>中了。使用命令<code>wine caidao.exe</code>。就可以执行菜刀。</p>
+<p>别说读书少，我骗人。有图有真相，┑(￣▽ ￣)┍。</p>
+<img src="/2017/10/28/中国菜刀在Linux下飞/1.png" alt="ByPupil" title="ByPupil">
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/18/CVE-2017-9603-分析/" class="archive-article-date">
-  	<time datetime="2017-09-18T05:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/18/CVE-2017-9603-分析/">CVE-2017-9603 分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">code audit</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://bypupil.github.io/2017/10/28/中国菜刀在Linux下飞/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/25/74CMS-v3-2-宽字节注入/" class="archive-article-date">
-  	<time datetime="2017-08-24T16:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-25</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/22/曾经就该做的程序设计-LeetCode/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">曾经就该做的程序设计--LeetCode</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/25/74CMS-v3-2-宽字节注入/">74CMS v3.2 - 宽字节注入</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">code audit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/23/FineCMS-v5-0-10任意文件上传/" class="archive-article-date">
-  	<time datetime="2017-08-23T13:39:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/23/FineCMS-v5-0-10任意文件上传/">FineCMS v5.0.10任意文件上传</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">code audit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -301,9 +353,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
