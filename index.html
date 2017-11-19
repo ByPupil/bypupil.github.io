@@ -151,6 +151,117 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Android软件分析中的的Hello-Word" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/19/Android软件分析中的的Hello-Word/">Android软件分析中的的Hello Word</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/19/Android软件分析中的的Hello-Word/" class="archive-article-date">
+  	<time datetime="2017-11-19T09:23:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>最近开始学习apk分析相关的知识，在分析apk中需要不断重复又十分钟的反编译，修改程序，编译，为apk增加签名的步骤进行讲解。这也是方便自己和他人，在问起apk相关问题时，遇到基础步骤时就不需要在一次又一次的讲解，同过以下的一个实验操作去理解反编译，重打包的过程。</p>
+<h3 id="0x01-准备"><a href="#0x01-准备" class="headerlink" title="0x01 准备"></a>0x01 准备</h3><ol>
+<li>Android模拟器</li>
+<li>apktool</li>
+<li>Android逆向工具</li>
+<li>notepad++</li>
+<li>Hello World（apk程序，该程序根据《Android软件安全与逆向分析》第二章编写）</li>
+</ol>
+<h3 id="0x02-模拟器使用"><a href="#0x02-模拟器使用" class="headerlink" title="0x02 模拟器使用"></a>0x02 模拟器使用</h3><p>该文章在做实验时所使用的模拟器（逍遥安卓模拟器）。对于该程序安装过程不在讲解。启动软件，该模拟器启动之后的截图如下：</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/1.png" alt="ByPupil" title="ByPupil">
+<p>安装程序如下：</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/2.png" alt="ByPupil" title="ByPupil">
+<p>打开该程序后，我尝试输入用户名和注册码,该程序会返回无效用户名或密码，因为我们并不了解该程序的加密方式。</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/3.png" alt="ByPupil" title="ByPupil">
+<h3 id="0x03-反编译apk文件"><a href="#0x03-反编译apk文件" class="headerlink" title="0x03 反编译apk文件"></a>0x03 反编译apk文件</h3><p>对于反编译apk文件有很多种的方法和工具，在此教程中使用的时apktool。基本用法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">反编译apk文件的命令：apktool d[ecode] [OPTS] &lt;file.apk&gt; [&lt;dir&gt;]</div><div class="line">编译apk文件的命令：apktool b[uild] [OPTS] [&lt;app_path&gt;] [&lt;out_file&gt;]</div></pre></td></tr></table></figure></p>
+<p>此处我们使用：<code>apktool d HelloWorld.apk</code>。执行之后会在当前目录下生成名称为HelloWorld的目录。</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/4.png" alt="ByPupil" title="ByPupil">
+<p>反编译后的目录结构如下：</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/5.png" alt="ByPupil" title="ByPupil">
+<h3 id="0x04-分析apk文件"><a href="#0x04-分析apk文件" class="headerlink" title="0x04 分析apk文件"></a>0x04 分析apk文件</h3><p>反编译生成的文件生成了一系列的目录与文件，其中smali目录下存放了程序所有的反汇编代码，res目录则是程序中所有的资源文件。对于突破该程序的破解，是否还记得刚才程序提示的无效用户名或注册码。通过寻找在<code>res/values/strings.xml</code>文件中找到了该字符串，且在<code>res/values/public.xml</code>文件中找到该字符串所对应的id。</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/6.png" alt="ByPupil" title="ByPupil">
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/7.png" alt="ByPupil" title="ByPupil">
+<p>接着对smali目录下的文件进行搜索字符串<code>0x7f05000b</code>，在<code>smali/com/droider/crackme0201/MainActivity$1.smali</code>中找到了该字符串。</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/8.png" alt="ByPupil" title="ByPupil">
+<p>回溯该文件，在该文件第96行存在if判断，语句如下：<code>if-nez v0, :cond_0</code>。该语句的作用是当v0不为0是跳转到<code>:cond_0</code>处。为了让其判断为0时也进行跳转，我们将其修改为<code>if-eqz v0, :cond_0</code>。使其跳转到<code>:cond_0</code>，此处我们发现了<code>const v1, 0x7f05000c</code>，我们通过搜索<code>public.xml</code>和<code>strings.xml</code>后，发现其值的实际意义为：<code>恭喜您！注册成功</code>。修改后的代码如下：</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/9.png" alt="ByPupil" title="ByPupil">
+<h3 id="0x05-重新编译apk文件并签名"><a href="#0x05-重新编译apk文件并签名" class="headerlink" title="0x05 重新编译apk文件并签名"></a>0x05 重新编译apk文件并签名</h3><p>使用命令：<code>apktool b HelloWorld</code>，即完成了对该程序的重新编译。重新编译后的apk文件位于dist目录下。</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/10.png" alt="ByPupil" title="ByPupil">
+<p>编译生成为<code>HelloWorld.apk</code>文件是没有签名的，还不能安装测试。接下来使用Android逆向助手为该apk文件进行签名。<br>具体步骤如下：</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/11.png" alt="ByPupil" title="ByPupil">
+<p>生成的文件位于dist目录下，其文件名为：<code>HelloWorld_sign.apk</code>。</p>
+<h3 id="0x06-安装测试"><a href="#0x06-安装测试" class="headerlink" title="0x06 安装测试"></a>0x06 安装测试</h3><p>启动Android模拟器，将重新打包的文件进行安装测试。<br>此时，在该程序中输入任意用户名和注册码都是将提示<code>恭喜您!注册成功</code>。</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/12.png" alt="ByPupil" title="ByPupil">
+<p>这儿说输入任意用户名和注册码都会提示成功，这话有点狂了。上张图瞧瞧：</p>
+<img src="/2017/11/19/Android软件分析中的的Hello-Word/13.png" alt="ByPupil" title="ByPupil">
+<p>如果输入的用户名与注册码是正确的情况下，反而其输出结果是：<code>无效用户名或注册码</code>。<br>具体其加密过程是如何，大家可以自己研究以下，因为这并不难理解。</p>
+<h3 id="0x07-总结"><a href="#0x07-总结" class="headerlink" title="0x07 总结"></a>0x07 总结</h3><p>该文件通过一个实例讲解了Android程序的一般分析与破解流程。学会了这个基础的流程之后才能更好的分析比这个更难更复杂的代码。</p>
+<p><a href="http://pan.baidu.com/s/1bpLcJPd" target="_blank" rel="external">相关材料下载</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/19/Android软件分析中的的Hello-Word/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-中国菜刀在Linux下飞" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1005,6 +1116,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">code audit</a>
               </li>
              
@@ -1017,11 +1132,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
+                <a href="javascript:void(0)" class="js-tag color5">程序设计</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">程序设计</a>
+                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
             
             <div class="clearfix"></div>
