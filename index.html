@@ -151,6 +151,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-WSL初体验" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/11/WSL初体验/">WSL初体验</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/11/WSL初体验/" class="archive-article-date">
+  	<time datetime="2017-12-11T05:14:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="WSL-体验"><a href="#WSL-体验" class="headerlink" title="WSL 体验"></a>WSL 体验</h1><h3 id="WSL-简介"><a href="#WSL-简介" class="headerlink" title="WSL 简介"></a>WSL 简介</h3><p>WSL（Windows System for Linux）是一个为在Windows 10上能够原生运行Linux二进制可执行文件（ELF格式）的兼容。</p>
+<h3 id="WSL-安装"><a href="#WSL-安装" class="headerlink" title="WSL 安装"></a>WSL 安装</h3><p>安装WSL的时候遇到了一些坑，一直以为只要是Windows10以上的任意版本的系统都是可以完美的安装。眼瞎的我，就跳了进去。其实在<a href="https://docs.microsoft.com/zh-cn/windows/wsl/install-win10" target="_blank" rel="external">微软官网</a>上已经强调必须是<strong>build 16215</strong>版本或者更新。</p>
+<p><strong>1.启动Linux子系统</strong> </p>
+<ol>
+<li>系统升级到一周年正式版及以上(1607)</li>
+<li>依次在 设置 - 更新与安全 - 针对开发人员 选项中，启用”开发人员模式”</li>
+<li>在资源管理器中打开 控制面板\所有控制面板项\程序和功能 , 打开 启用或关闭 Windows功能 , 勾选 适用于Linux的Windows子系统(Beta)</li>
+<li>重启电脑</li>
+<li>命令行运行 lxrun /install /y 开始安装<br>安装速度取决于网络情况，下载的文件在 %localappdata%\lxss 目录下 lxss.tar.gz (181M)，解压后大概500M, rootfs 目录即为子系统根目录。</li>
+<li>命令行运行 bash 进入Ubuntu默认使用的 root 帐号登录，通过指令 passwd 设置密码。</li>
+<li>毕竟爱折腾，难免会把子系统环境(lxss目录)玩坏掉，因此干正事前最好先备份下以便快速还原。注意，不要直接右键复制或者打包，可能会导致文件权限丢失的。<br>xcopy %localappdata%\lxss %localappdata%\lxss.bak /E</li>
+<li>当然，如果你比较任性也可以不执行上一步的备份操作，通过命令行运行 lxrun /uninstall /full 轻松卸载子系统，重复上面的步骤即可重装，不过要注意下载速度时好时坏哦。</li>
+</ol>
+<p><strong>使用Power shell开启WSL选项方法：</strong>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</p>
+<img src="/2017/12/11/WSL初体验/1.png" alt="ByPupil" title="ByPupil">
+<img src="/2017/12/11/WSL初体验/2.png" alt="ByPupil" title="ByPupil">
+<img src="/2017/12/11/WSL初体验/3.png" alt="ByPupil" title="ByPupil">
+<img src="/2017/12/11/WSL初体验/4.png" alt="ByPupil" title="ByPupil">
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://docs.microsoft.com/zh-cn/windows/wsl/install-win10" target="_blank" rel="external">https://docs.microsoft.com/zh-cn/windows/wsl/install-win10</a></p>
+<p><a href="http://www.jianshu.com/p/bc38ed12da1d" target="_blank" rel="external">http://www.jianshu.com/p/bc38ed12da1d</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Windows工具</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/11/WSL初体验/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Android软件分析中的的Hello-Word" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1116,19 +1209,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">code audit</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">programme</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Windows工具</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">programme</a>
               </li>
              
               <li class="article-tag-list-item">
