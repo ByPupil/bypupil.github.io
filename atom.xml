@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://bypupil.github.io/"/>
-  <updated>2017-12-12T00:58:42.991Z</updated>
+  <updated>2018-03-11T17:26:13.490Z</updated>
   <id>https://bypupil.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Tor+Privoxy实现匿名</title>
+    <link href="https://bypupil.github.io/2018/03/12/Tor-Privoxy%E5%AE%9E%E7%8E%B0%E5%8C%BF%E5%90%8D/"/>
+    <id>https://bypupil.github.io/2018/03/12/Tor-Privoxy实现匿名/</id>
+    <published>2018-03-11T16:31:48.000Z</published>
+    <updated>2018-03-11T17:26:13.490Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>渗透测试过程中，最让我寒心的是。仅仅测试了单引号，就把我ip拉黑。接下来就是用大量的代理进行测试，如果代理ip很少。那么就不能在继续渗透你的站点。通过搜索引擎发现一个神器 – Tor。</p><h2 id="0x01-神器介绍"><a href="#0x01-神器介绍" class="headerlink" title="0x01 神器介绍"></a>0x01 神器介绍</h2><p><strong>No.1-Tor</strong><br>官方介绍：Tor是免费软件和开放网络，它帮助您抵御流量分析，威胁个人自由和隐私、机密商业活动和关系以及国家安全的网络监视形式。<br>俗话：Tor可以在不还钱的情况下保护个人隐私。<br><a href="https://www.torproject.org/" target="_blank" rel="external">官方</a></p><p><strong>No.2-Privoxy</strong><br>官方介绍：Privoxy是一款带过滤功能的代理服务器，针对HTTP、HTTPS协议。通过Privoxy的过滤功能，用户可以保护隐私、对网页内容进行过滤、管理cookies，以及拦阻各种广告等。Privoxy可以用作单机，也可以应用到多用户的网络。<br>俗话：将socks代理转换成为http代理和广告过滤的工具。<br><a href="https://www.privoxy.org/" target="_blank" rel="external">官方</a></p><h2 id="0x02-环境搭建"><a href="#0x02-环境搭建" class="headerlink" title="0x02 环境搭建"></a>0x02 环境搭建</h2><p>Tor和Privoxy的安装过程在此不在讲解.安装Tor后，如果使用TorBrowser工具就已经可以做到访问任意网页时，每次的ip都是随机的。接下来主要讲解如何让系统中的所有浏览器都走Tor代理流量。<br><strong>OSX</strong><br>在查找资料的时候遇到了一个坑，配置Privoxy的时，<code>forward-socks4a</code>的本地端口会填写<code>9050</code>。然而在实际测试的时候，这个端口其实是不开放的，真正开放的端口是<code>9150</code>。<br>Privoxy配置文件路径：<code>/usr/local/etc/privoxy/config</code>。在配置中添加如下命令：<br><code>forward-socks4a / 127.0.0.1:9050 .</code><br>其实<code>forward-socks4a</code>是命令项，<code>/</code>表示对所有站点进行同样的配置，<code>127.0.0.1:9050</code>表示代理的是Tor的socks端口。</p><p><strong>注意：</strong><br>该命令最后存在一个<code>.</code>。该点表示没有http设置，如果去掉会报错。<br>下一步是配置网络代理，具体如下图：<br><img src="/2018/03/12/Tor-Privoxy实现匿名/1.png" alt="ByPupil" title="ByPupil"><br>此时，使用任意浏览器都可以在每次访问网页时使用不同IP。</p><h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://www.cppblog.com/riverbeast/archive/2007/11/18/36866.html" target="_blank" rel="external">Tor+Privoxy黄金搭档</a><br><a href="http://www.cppblog.com/riverbeast/archive/2007/11/18/36869.html" target="_blank" rel="external">单独使用Privoxy</a><br><a href="http://thehiddenwiki.org/" target="_blank" rel="external">Hidden Wiki .onion Urls Tor Link Directory</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h2&gt;&lt;p&gt;渗透测试过程中，最让我寒心的是。仅仅测试了单引号，就把我ip拉黑。接下来就是用大量的代理进行测试，如
+      
+    
+    </summary>
+    
+    
+      <category term="渗透测试" scheme="https://bypupil.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>WSL初体验</title>

