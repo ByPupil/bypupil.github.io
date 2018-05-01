@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://bypupil.github.io/"/>
-  <updated>2018-03-11T17:26:13.490Z</updated>
+  <updated>2018-05-01T06:31:31.367Z</updated>
   <id>https://bypupil.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>适合安全爱好者的截图神器</title>
+    <link href="https://bypupil.github.io/2018/05/01/%E9%80%82%E5%90%88%E5%AE%89%E5%85%A8%E7%88%B1%E5%A5%BD%E8%80%85%E7%9A%84%E6%88%AA%E5%9B%BE%E7%A5%9E%E5%99%A8/"/>
+    <id>https://bypupil.github.io/2018/05/01/适合安全爱好者的截图神器/</id>
+    <published>2018-05-01T06:29:41.000Z</published>
+    <updated>2018-05-01T06:31:31.367Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>在乙方安全公司中，信息安全从业者常常需要编写渗透测试，应急响应，漏洞分析等文档。文档编写时需要搭配相关截图来解释说明，此时一款强大的，绿色免费截图工具正是我们作为信息安全从业者强烈渴望的。之前一直使用的是windows自带的截图工具和QQ的截图功能，在朋友推荐下开始使用截图神器<a href="https://www.snipaste.com/" target="_blank" rel="external">Snipaste</a>。跟着<a href="https://docs.snipaste.com/zh-cn/" target="_blank" rel="external">官方文档</a>学习了一遍，个人感觉特别适合信息安全从业者。</p><h2 id="0x01-Snipaste简介"><a href="#0x01-Snipaste简介" class="headerlink" title="0x01 Snipaste简介"></a>0x01 Snipaste简介</h2><p>Snipaste 不只是截图，善用贴图功能将帮助你提升工作效率！</p><h2 id="0x02-基础操作"><a href="#0x02-基础操作" class="headerlink" title="0x02 基础操作"></a>0x02 基础操作</h2><p><strong>截屏</strong></p><ul><li>快捷键（默认F1）</li></ul><p><strong>保存截图（成功截图）</strong></p><ul><li>保存到剪贴板（Ctrl + C / Enter / 双击 截屏区域）</li><li>保存到文件（Ctrl + S）</li><li>保存到贴图（Ctrl + T）</li><li>快速保存（Ctrl + Shift + S）</li></ul><p><strong>取消当前截图</strong></p><ul><li>快捷键（Esc）</li></ul><p><strong>回放截图记录</strong></p><ul><li>快捷键（,(后退)或.(前进)）</li></ul><p><strong>逐像素控制截取区域</strong></p><ul><li>快捷键（WASD）</li></ul><p><strong>放大镜</strong></p><ul><li>快捷键（Alt）</li></ul><p><strong>取色</strong></p><ul><li>当放大镜可见的时候，按下 C 可复制该像素点的颜色值（RGB/Hex）。之后可以 F3 将它贴出，或者 Ctrl + V 贴到其他程序里</li><li>可按下 Shift 来切换颜色格式</li></ul><p><strong>贴图</strong></p><ul><li>贴图是将系统剪贴板中的内容转化成图片，然后作为窗口置顶显示。所以，能否贴出来、贴出来的是什么，取决于系统剪贴板中的内容。</li><li>快捷键（F3）</li><li>旋转（1,2）</li><li>翻转（3,4）</li></ul><h2 id="0x03-更多"><a href="#0x03-更多" class="headerlink" title="0x03 更多"></a>0x03 更多</h2><p>这里只是介绍了一些常用的操作，如果想了解更多<code>Snipaste</code>操作，可以查看<a href="https://www.v2ex.com/member/levie" target="_blank" rel="external">levie</a>发表的文章:<a href="https://www.v2ex.com/t/295433" target="_blank" rel="external">Snipaste - 开发了三年的截图工具，但不只是截图</a>或看<a href="https://docs.snipaste.com/zh-cn/" target="_blank" rel="external">官方文档</a>。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h2&gt;&lt;p&gt;在乙方安全公司中，信息安全从业者常常需要编写渗透测试，应急响应，漏洞分析等文档。文档编写时需要搭配相
+      
+    
+    </summary>
+    
+    
+      <category term="神器" scheme="https://bypupil.github.io/tags/%E7%A5%9E%E5%99%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>Tor+Privoxy实现匿名</title>
