@@ -151,6 +151,189 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-PHP集成环境默认配置之disable-function" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/13/PHP集成环境默认配置之disable-function/">PHP集成环境默认配置之disable_function</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/13/PHP集成环境默认配置之disable-function/" class="archive-article-date">
+  	<time datetime="2018-05-12T16:26:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>国内大量使用了Apache+MySQL+PHP的web架构，满足该架构的集成环境在网上可以找到很多，例如：PHPStudy，XAMPP，WAMP，LAMP等。这篇文章主要对这些集成环境进行测试。<br>在日益提高对web安全的意识，开放者会使用了addslashes对数据库查询的参数过滤，使用<code>escapeshellcmd</code>对命令执行的参数过滤等。然而往往忘记了在php的配置文件中存在 <code>disable_function</code>参数。该参数可以禁用一些危险性较高，但在开发中缺没有使用的函数。</p>
+<h2 id="0x01-PHP常见危险函数"><a href="#0x01-PHP常见危险函数" class="headerlink" title="0x01 PHP常见危险函数"></a>0x01 PHP常见危险函数</h2><p>使用PHP开发站点时，存在一些在生产环境中使用频率不高，但是具有较高的危险性。在这小结中总结一些敏感危险函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">phpinfo()</div><div class="line">测试用例：phpinfo()</div><div class="line">描述：输出关于PHP配置的信息。</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/1.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">passthru()</div><div class="line">测试用例：passthru(&apos;dir&apos;)或者passthru(&apos;ls&apos;)</div><div class="line">描述：执行外部程序并且显示原始输出</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/3.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">exec()</div><div class="line">测试用例：exec(&apos;whoami&apos;)</div><div class="line">描述：执行一个外部程序</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/4.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">system()</div><div class="line">测试用例：</div><div class="line">描述：执行外部程序，并且显示输出</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/4.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">shell_exec()</div><div class="line">测试用例：shell_exec()</div><div class="line">描述：通过shell环境执行命令，并且将完整的输出以字符串的方式返回。</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/4.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">proc_open()</div><div class="line">测试用例：$p = proc_open(&quot;net user&quot;, array(array(&quot;pipe&quot;,&quot;r&quot;), array(&quot;pipe&quot;,&quot;w&quot;), array(&quot;pipe&quot;,&quot;w&quot;)), $pipes)</div><div class="line">功能描述：执行一个命令，并且打开用来输入/输出的文件指针</div><div class="line">版本范围：(PHP 4 &gt;= 4.3.0, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/6.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">proc_get_status()</div><div class="line">测试用例：proc_get_status($proc)</div><div class="line">功能描述：获取由proc_open()函数打开的进程的信息</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/16.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">popen()</div><div class="line">测试用例：popen(&quot;whoami&quot;, &quot;r&quot;)</div><div class="line">功能描述：打开进程文件指针</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/11.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">chroot()</div><div class="line">测试用例：chroot(&quot;/&quot;)</div><div class="line">描述：改变根目录，本函数仅在系统支持且运行于CLI，CGI或嵌入SAPI版本时才能正确工作。使用权限为root。此函数不能在Windows平台下实现。</div><div class="line">版本范围：(PHP 4 &gt;= 4.0.5, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/5.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">scandir()</div><div class="line">测试用例：scandir(&apos;.&apos;)或scandir(&apos;c:/&apos;)</div><div class="line">描述：列出指定路径中的文件和目录</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/2.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ini_alter()或ini_set()</div><div class="line">测试用例：ini_alter(&apos;display_error&apos;, &apos;0&apos;)或者ini_set(&quot;display_error&quot;, &quot;0&quot;)</div><div class="line">功能描述：为一个配置选项设置值</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div><div class="line">可配置参数清单：http://php.net/manual/zh/ini.list.php</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/7.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ini_restore()</div><div class="line">测试用例：ini_restore($setting)</div><div class="line">功能描述：恢复配置选项的值</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/17.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">putenv()</div><div class="line">测试用例：putenv(&quot;ABC=test&quot;)</div><div class="line">功能描述：设置环境变量</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/8.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">pfsockopen()</div><div class="line">测试用例：pfsockopen(&quot;www.baidu.com&quot;, 80, $errno, $errstr, 30)</div><div class="line">功能描述：打开一个持久的网络连接或者Unix套接字连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图:</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/10.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">fsockopen()</div><div class="line">测试用例：fsockopen(&quot;www.baidu.com&quot;, 80, $error, $errstr, 30)</div><div class="line">功能描述：打开一个网络连接或者一个Unix套接字连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/9.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">stream_socket_server()</div><div class="line">测试用例：stream_socket_server(&quot;tcp://0.0.0.0:8000&quot;, $errno, $errstr)</div><div class="line">功能描述：建立一个Internet或者Unix域的服务连接</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/12.png" alt="ByPupil" title="ByPupil">
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/13.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">curl_exec()</div><div class="line">测试用例：curl_exec($ch)</div><div class="line">功能描述：执行cURL会话</div><div class="line">版本范围：(PHP 4 &gt;= 4.0.2, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/32.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">curl_multi_exec()</div><div class="line">测试用例：curl_multi_exec($mh, $active)</div><div class="line">功能描述：运行当前cURL句柄的子连接</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">chgrp()</div><div class="line">测试用例：chgrp($filename, 2)</div><div class="line">功能描述：改变文件所属的组</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/14.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">chown()</div><div class="line">测试用例：chown($filename, $user_name)</div><div class="line">功能描述：改变文件所有者</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/15.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dl()</div><div class="line">测试用例：dl(&apos;php_sqlite.dll&apos;)</div><div class="line">功能描述：运行时载入一个PHP扩展</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/18.png" alt="ByPupil" title="ByPupil">
+<p><code>此函数被某些SAPI移除了。</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">openlog()</div><div class="line">测试用例：openlog(&quot;myprogram&quot;, 0, LOG_LOCAL0)</div><div class="line">功能描述：与系统日志打开连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">syslog()</div><div class="line">测试用例：syslog(&quot;My syslog message&quot;)</div><div class="line">功能描述：生成系统日志消息</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/19.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">readlink()</div><div class="line">测试用例：readlink(&apos;/vmlinuz&apos;)</div><div class="line">功能描述：返回符号连接指向的目标</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<p><code>运行 PHP 于Vista、Server 2008 或更高版本才能正常使用。</code><br><img src="/2018/05/13/PHP集成环境默认配置之disable-function/20.png" alt="ByPupil" title="ByPupil"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">symlink()</div><div class="line">测试用例：symlink($target, $link)</div><div class="line">功能描述：建立符号连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<p><code>运行 PHP 于Vista、Server 2008 或更高版本才能正常使用。</code></p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/21.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">highlight_file()或show_source()</div><div class="line">测试用例：highlight_file(__FILE__)，show_source(__FILE__)</div><div class="line">功能描述：语法高亮一个文件</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/30.png" alt="ByPupil" title="ByPupil">
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/31.png" alt="ByPupil" title="ByPupil">
+<h2 id="0x02-PHPStudy检测"><a href="#0x02-PHPStudy检测" class="headerlink" title="0x02 PHPStudy检测"></a>0x02 PHPStudy检测</h2><p><strong>PHPStudy简介</strong></p>
+<p>该程序包集成最新的Apache+PHP+MySQL+phpMyAdmin+ZendOptimizer,一次性安装，无须配置即可使用，是非常方便、好用的PHP调试环境该程序不仅包括PHP调试环境，还包括了开发工具、开发手册等·总之学习PHP只需一个包。</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/22.png" alt="ByPupil" title="ByPupil">
+<p><strong>配置检测</strong></p>
+<p><code>PHPStudy</code>版本为：<code>20180211</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/23.png" alt="ByPupil" title="ByPupil">
+<p>该参数项是为空的，说明PHPStduy并没有关注这一点？再次看PHPStudy的简介，这是PHP调试打开环境并不是可上线的生产环境。对于使用PHPStudy作为生产环境的站长是否需要反思下这个问题。</p>
+<h2 id="0x03-XAMPP检测"><a href="#0x03-XAMPP检测" class="headerlink" title="0x03 XAMPP检测"></a>0x03 XAMPP检测</h2><p><strong>XAMPP简介</strong></p>
+<p>XAMPP（Apache+MySQL+PHP+PERL）是一个功能强大的建站集成软件包。这个软件包原来的名字是 LAMPP，但是为了避免误解，最新的几个版本就改名为 XAMPP 了。它可以在Windows、Linux、Solaris、Mac OS X 等多种操作系统下安装使用，支持多语言：英文、简体中文、繁体中文、韩文、俄文、日文等。</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/24.png" alt="ByPupil" title="ByPupil">
+<p><strong>配置检测</strong></p>
+<p><code>XAMPP</code>版本为：<code>win32-5.6.35-0-VC11</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/25.png" alt="ByPupil" title="ByPupil">
+<p>该参数是空的，XAMPP没有对其<code>disable_functions</code>跟PHPStudy的做法是一样的。</p>
+<h2 id="0x04-WAMP检测"><a href="#0x04-WAMP检测" class="headerlink" title="0x04 WAMP检测"></a>0x04 WAMP检测</h2><p><strong>WAMP简介</strong></p>
+<p>Windows下的Apache+Mysql/MariaDB+Perl/PHP/Python，一组常用来搭建动态网站或者服务器的开源软件，本身都是各自独立的程序，但是因为常被放在一起使用，拥有了越来越高的兼容度，共同组成了一个强大的Web应用程序平台。随着开源潮流的蓬勃发展，开放源代码的LAMP已经与J2EE和.Net商业软件形成三足鼎立之势，并且该软件开发的项目在软件方面的投资成本较低，因此受到整个IT界的关注。LAMP是基于Linux，Apache，MySQL/MariaDB和PHP的开放资源网络开发平台，PHP是一种有时候用Perl或Python可代替的编程语言。这个术语来自欧洲，在那里这些程序常用来作为一种标准开发环境。名字来源于每个程序的第一个字母。每个程序在所有权里都符合开放源代码标准：Linux是开放系统；Apache是最通用的网络服务器；mySQL是带有基于网络管理附加工具的关系数据库；PHP是流行的对象脚本语言，它包含了多数其它语言的优秀特征来使得它的网络开发更加有效。开发者在Windows操作系统下使用这些Linux环境里的工具称为使用WAMP。</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/26.png" alt="ByPupil" title="ByPupil">
+<p><strong>配置检测</strong></p>
+<p><code>WAMP</code>版本为：<code>3.1.3</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/27.png" alt="ByPupil" title="ByPupil">
+<p>该参数是空的，WAMP没有对其<code>disable_functions</code>进行合理配置。</p>
+<h2 id="0x05-upupw检测"><a href="#0x05-upupw检测" class="headerlink" title="0x05 upupw检测"></a>0x05 upupw检测</h2><p><strong>upupw简介</strong></p>
+<p>UPUPW绿色服务器平台是目前Windows下最具特色的免费服务器PHP套件。包括Apache,Nginx和Kangle三大核心版本,其中Kangle全能版支持IOCP工作模型,支持PHP,ASP,ASP.NET解析语言,更适应Win服务器的高效生产工作!UPUPW PHP套件简化了PHP环境搭建步骤,一个压缩包解压到不含中文和空格的任意磁盘目录即可运行.适用于VPS,云主机,服务器架设网站,也适用于本地开发和测试PHP程序.绿色,安全,稳定,高速!</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/28.png" alt="ByPupil" title="ByPupil">
+<p><strong>配置检测</strong></p>
+<p><code>upupw</code>版本为：<code>5.6_64</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/29.png" alt="ByPupil" title="ByPupil">
+<p>在该配置文件中，<code>disable_functions</code>参数做了部分的限制，说明制作该集成环境时，制作者已经注意了这个问题。</p>
+<p><strong>总结</strong></p>
+<p>PHPStudy，XAMPP，WAMP都是开发测试环境，并不是一个合适的生产环境。如果一定要使用该集成环境，将没有写在代码中的危险函数写入到<code>disable_function</code>。而upupw意识到了危险函数存在的情况，所以它做了一定的限制（主要是命令执行的函数），该集成环境可以一定程度上有防护。个人建议：对于上线的产品，集成环境一定要自己配置，细化到每一个重要的配置项。才能更大程度的提高网站的安全性。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">code audit</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/13/PHP集成环境默认配置之disable-function/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-适合安全爱好者的截图神器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -981,124 +1164,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/09/18/CVE-2017-9603-分析/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-南邮CTF综合题2WriteUp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/11/南邮CTF综合题2WriteUp/">南邮CTF综合题2WriteUp</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/11/南邮CTF综合题2WriteUp/" class="archive-article-date">
-  	<time datetime="2017-09-10T16:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>由于这道题目能够读取源码，很开的我将它收入到了我的<a href="https://github.com/ByPupil/ctfhub" target="_blank" rel="external">CTFHub</a>中。<a href="https://github.com/ByPupil/ctfhub" target="_blank" rel="external">CTFHub</a>这个项目是我前几天突然的冲动就让他诞生了。简单介绍下，<a href="https://github.com/ByPupil/ctfhub" target="_blank" rel="external">CTFHub</a>是面向所有学习CTF的朋友的环境，不用了解docker原理及知识，仅仅简单执行几条命令即可完成整个平台的搭建。方便大家去做一些已经没有在线环境的挑战题。当然，师傅们有什么好的题目也可以通过该项目中的邮箱联系我。在这儿谢谢将来未这个项目共同努力的朋友们。</p>
-<h3 id="0x01-信息收集"><a href="#0x01-信息收集" class="headerlink" title="0x01 信息收集"></a>0x01 信息收集</h3><p>首先，访问了主页，这是一个留言板的项目。根据题目描述这是一道非xss的题目。所以直接放弃怼xss。</p>
-<img src="/2017/09/11/南邮CTF综合题2WriteUp/1.png" alt="Bypupil" title="Bypupil">
-<p>通过首页的信息，我们获取到该文章存在的如下页面：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/index.php</div><div class="line">/preview.php</div><div class="line">/about.php</div><div class="line">/say.php</div><div class="line">/so.php</div></pre></td></tr></table></figure>
-<p>在页面的最下放有一个<strong>本CMS说明</strong>，通过该文件和之前的信息，我们可以知道该系统存在如下文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">config.php：存放数据库信息</div><div class="line">index.php：主页文件</div><div class="line">passencode.php：Funny公司自写密码加密算法库</div><div class="line">say.php：用于接收和处理用户留言请求</div><div class="line">sm.txt：本CMS的说明文档</div><div class="line">preview.php：留言提交的接口</div><div class="line">about.php：文件读取的接口</div><div class="line">so.php：留言查询的接口</div></pre></td></tr></table></figure>
-<p>且了解到数据库中存在<code>admin</code>数据表。</p>
-<p>通过观察<strong>本CMS说明</strong>的链接<code>http://cms.nuptzj.cn/about.php?file=sm.txt</code>是一个文件读取链接。通过尝试，在已知的链接中除<code>config.php</code>的文件内容不能获取，其他文件都可以获取到源代码。</p>
-<p>为了节省篇幅<code>index.php</code>源码就不粘贴了，因为没有可利用的地方。</p>
-<p><code>passencode.php</code>源码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">passencode</span><span class="params">($content)</span> </span>&#123;</div><div class="line">    <span class="comment">//$pass=urlencode($content);</span></div><div class="line">    $array = str_split($content);</div><div class="line">    $pass = <span class="string">""</span>;</div><div class="line">    <span class="keyword">for</span> ($i = <span class="number">0</span>;$i &lt; count($array);$i++) &#123;</div><div class="line">        <span class="keyword">if</span> ($pass != <span class="string">""</span>) &#123;</div><div class="line">            $pass = $pass . <span class="string">" "</span> . (string)ord($array[$i]);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            $pass = (string)ord($array[$i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $pass;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<p>加密部分就是将密码的ASCII码保存了。</p>
-<p><code>about.php</code>源码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"Content-Type"</span> content=<span class="string">"text/html; charset=utf-8"</span> /&gt;</div><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$file = $_GET[<span class="string">'file'</span>];</div><div class="line"><span class="keyword">if</span> ($file == <span class="string">""</span> || strstr($file, <span class="string">'config.php'</span>)) &#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"file参数不能为空！"</span>;</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    $cut = strchr($file, <span class="string">"loginxlcteam"</span>);</div><div class="line">    <span class="keyword">if</span> ($cut == <span class="keyword">false</span>) &#123;</div><div class="line">        $data = file_get_contents($file);</div><div class="line">        $date = htmlspecialchars($data);</div><div class="line">        <span class="keyword">echo</span> $date;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"&lt;script&gt;alert('敏感目录，禁止查看！但是。。。')&lt;/script&gt;"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>通过<code>about.php</code>可以知道另一个敏感敏感目录<code>loginxlcteam</code>。</p>
-<p>访问后发现是一个登录页面，爆破了下若密码和万能密码都没有成功。</p>
-<img src="/2017/09/11/南邮CTF综合题2WriteUp/2.png" alt="ByPupil" title="ByPupil">
-<h3 id="0x02-漏洞发现"><a href="#0x02-漏洞发现" class="headerlink" title="0x02 漏洞发现"></a>0x02 漏洞发现</h3><p><code>so.php</code>源码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="keyword">if</span>($_SERVER[<span class="string">'HTTP_USER_AGENT'</span>]!=<span class="string">"Xlcteam Browser"</span>)&#123;</div><div class="line">    <span class="keyword">echo</span> <span class="string">'万恶滴黑阔，本功能只有用本公司开发的浏览器才可以用喔~'</span>;</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125;</div><div class="line">$id=$_POST[<span class="string">'soid'</span>];</div><div class="line"><span class="keyword">include</span> <span class="string">'config.php'</span>;</div><div class="line"><span class="keyword">include</span> <span class="string">'antiinject.php'</span>;</div><div class="line"><span class="keyword">include</span> <span class="string">'antixss.php'</span>;</div><div class="line">$id=antiinject($id);</div><div class="line">$con = mysql_connect($db_address,$db_user,$db_pass) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"不能连接到数据库！"</span>.mysql_error());</div><div class="line">mysql_select_db($db_name,$con);</div><div class="line">$id=mysql_real_escape_string($id);</div><div class="line">$result=mysql_query(<span class="string">"SELECT * FROM `message` WHERE display=1 AND id=$id"</span>);</div><div class="line">$rs=mysql_fetch_array($result);</div><div class="line"><span class="keyword">echo</span> htmlspecialchars($rs[<span class="string">'nice'</span>]).<span class="string">':&amp;lt;br /&amp;gt;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;'</span>.antixss($rs[<span class="string">'say'</span>]).<span class="string">'&amp;lt;br /&amp;gt;'</span>;</div><div class="line">mysql_free_result($result);</div><div class="line">mysql_free_result($file);</div><div class="line">mysql_close($con);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<p>这儿的<code>$id</code>参数可能存在注入，通过源码发现还存在<code>antiinject.php</code>和<code>antixss.php</code>。继续读其他文件的源码。</p>
-<p><code>antiinject.php</code>源码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">antiinject</span><span class="params">($content)</span></span>&#123; </div><div class="line">    $keyword=<span class="keyword">array</span>(<span class="string">"select"</span>,<span class="string">"union"</span>,<span class="string">"and"</span>,<span class="string">"from"</span>,<span class="string">' '</span>,<span class="string">"'"</span>,<span class="string">";"</span>,<span class="string">'"'</span>,<span class="string">"char"</span>,<span class="string">"or"</span>,<span class="string">"count"</span>,<span class="string">"master"</span>,<span class="string">"name"</span>,<span class="string">"pass"</span>,<span class="string">"admin"</span>,<span class="string">"+"</span>,<span class="string">"-"</span>,<span class="string">"order"</span>,<span class="string">"="</span>);</div><div class="line">     $info=strtolower($content); </div><div class="line">     <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;=count($keyword);$i++)&#123; </div><div class="line">        $info=str_replace($keyword[$i], <span class="string">''</span>,$info); </div><div class="line">    &#125; <span class="keyword">return</span> $info; </div><div class="line">&#125; </div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<p>这是一个基于黑名单的过滤函数，将所有的关键字转换位空。我们马上可以想到使用关键字嵌套的方式可以绕过。在<code>so.php</code>中使用了<code>mysql_real_escape_string</code>。</p>
-<p>它只转义 <strong>\x00、\n、\r、\、’、”、\x1a</strong>字符，这人使用的整型注入。</p>
-<h3 id="0x03-利用"><a href="#0x03-利用" class="headerlink" title="0x03 利用"></a>0x03 利用</h3><p>根据之前信息收集，我们之后数据库中存在<code>admin</code>数据表。所以我们需要将<code>admin</code>表中的记录读取出来。</p>
-<p>我们先猜解了message字段有4个，这个没有难度。就不给语句了。</p>
-<p>根据之前的信息，我们直接可以查询该密码，</p>
-<p>payload:<code>1/**/anANDd/**/1&gt;3/**/unUNIONion/**/selSELECTect/**/1,usernaNAMEme,userpaPASSss,4/**/frFROMom/**/admADMINin</code></p>
-<img src="/2017/09/11/南邮CTF综合题2WriteUp/3.png" alt="ByPupil" title="ByPupil">
-<p>根据我们之前的信息收集，我们知道这是每一个字符的ASCII码，</p>
-<img src="/2017/09/11/南邮CTF综合题2WriteUp/4.png" alt="ByPupil" title="ByPupil">
-<p>解码后的密码为：<code>fuckruntu</code>，登录后台，现在已经存在小马了。</p>
-<img src="/2017/09/11/南邮CTF综合题2WriteUp/5.png" alt="ByPupil" title="ByPupil">
-<p>要如何才能连上呢，想到了<code>about.php</code>这是一个可以读取文件的页面。</p>
-<img src="/2017/09/11/南邮CTF综合题2WriteUp/6.png" alt="ByPupil" title="ByPupil">
-<p>一看这个木马是一个回调后门，这儿主要利用了<code>preg_replace</code>函数的e模式。在e模式下，第二个参数会产生命令执行。</p>
-<p>我们可以构造语句进行目录枚举出来了：</p>
-<p><code>www=preg_replace&amp;wtf=var_dump(scandir(&#39;.&#39;))</code></p>
-<img src="/2017/09/11/南邮CTF综合题2WriteUp/7.png" alt="ByPupil" title="ByPupil">
-<p>直接读取<code>恭喜你获得flag2.txt</code>就可以获取到flag了。</p>
-<h3 id="0x04-搞事"><a href="#0x04-搞事" class="headerlink" title="0x04 搞事"></a>0x04 搞事</h3><p>突然想到，我要把这道题目<code>1:1</code>进行导出来。现在还不知道数据库是怎么设计的。还有一个config.php没有读出来呢。构造语句：</p>
-<p><code>www=preg_replace&amp;wtf=print_r(file_get_contents(&#39;config.php&#39;))</code></p>
-<img src="/2017/09/11/南邮CTF综合题2WriteUp/8.png" alt="ByPupil" title="ByPupil">
-<p>亲自测试了，数据库是可以连上的。当然作为白帽的我们不要搞破坏，从中学习到技巧最重要。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/11/南邮CTF综合题2WriteUp/">展开全文 >></a>
         </p>
       
 

@@ -6,14 +6,54 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://bypupil.github.io">
-  <title>Archives: 2018 | ByPupil&#39;s blog</title>
+  <title>PHP集成环境默认配置之disable_function | ByPupil&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ByPupil&#39;s blog">
-<meta property="og:url" content="https://bypupil.github.io/archives/2018/index.html">
+  <meta name="description" content="0x00 前言国内大量使用了Apache+MySQL+PHP的web架构，满足该架构的集成环境在网上可以找到很多，例如：PHPStudy，XAMPP，WAMP，LAMP等。这篇文章主要对这些集成环境进行测试。在日益提高对web安全的意识，开放者会使用了addslashes对数据库查询的参数过滤，使用escapeshellcmd对命令执行的参数过滤等。然而往往忘记了在php的配置文件中存在 disa">
+<meta name="keywords" content="code audit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP集成环境默认配置之disable_function">
+<meta property="og:url" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/index.html">
 <meta property="og:site_name" content="ByPupil&#39;s blog">
+<meta property="og:description" content="0x00 前言国内大量使用了Apache+MySQL+PHP的web架构，满足该架构的集成环境在网上可以找到很多，例如：PHPStudy，XAMPP，WAMP，LAMP等。这篇文章主要对这些集成环境进行测试。在日益提高对web安全的意识，开放者会使用了addslashes对数据库查询的参数过滤，使用escapeshellcmd对命令执行的参数过滤等。然而往往忘记了在php的配置文件中存在 disa">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/1.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/3.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/4.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/4.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/4.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/6.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/16.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/11.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/5.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/2.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/7.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/17.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/8.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/10.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/9.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/12.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/13.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/32.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/14.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/15.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/18.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/19.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/20.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/21.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/30.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/31.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/22.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/23.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/24.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/25.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/26.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/27.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/28.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/29.png">
+<meta property="og:updated_time" content="2018-05-12T16:34:35.600Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ByPupil&#39;s blog">
+<meta name="twitter:title" content="PHP集成环境默认配置之disable_function">
+<meta name="twitter:description" content="0x00 前言国内大量使用了Apache+MySQL+PHP的web架构，满足该架构的集成环境在网上可以找到很多，例如：PHPStudy，XAMPP，WAMP，LAMP等。这篇文章主要对这些集成环境进行测试。在日益提高对web安全的意识，开放者会使用了addslashes对数据库查询的参数过滤，使用escapeshellcmd对命令执行的参数过滤等。然而往往忘记了在php的配置文件中存在 disa">
+<meta name="twitter:image" content="https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/1.png">
   
     <link rel="alternative" href="/atom.xml" title="ByPupil&#39;s blog" type="application/atom+xml">
   
@@ -149,36 +189,165 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-PHP集成环境默认配置之disable-function" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/13/PHP集成环境默认配置之disable-function/" class="archive-article-date">
-  	<time datetime="2018-05-12T16:26:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/13/PHP集成环境默认配置之disable-function/">PHP集成环境默认配置之disable_function</a>
+    <h1 class="article-title" itemprop="name">
+      PHP集成环境默认配置之disable_function
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/05/13/PHP集成环境默认配置之disable-function/" class="archive-article-date">
+  	<time datetime="2018-05-12T16:26:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>国内大量使用了Apache+MySQL+PHP的web架构，满足该架构的集成环境在网上可以找到很多，例如：PHPStudy，XAMPP，WAMP，LAMP等。这篇文章主要对这些集成环境进行测试。<br>在日益提高对web安全的意识，开放者会使用了addslashes对数据库查询的参数过滤，使用<code>escapeshellcmd</code>对命令执行的参数过滤等。然而往往忘记了在php的配置文件中存在 <code>disable_function</code>参数。该参数可以禁用一些危险性较高，但在开发中缺没有使用的函数。</p>
+<h2 id="0x01-PHP常见危险函数"><a href="#0x01-PHP常见危险函数" class="headerlink" title="0x01 PHP常见危险函数"></a>0x01 PHP常见危险函数</h2><p>使用PHP开发站点时，存在一些在生产环境中使用频率不高，但是具有较高的危险性。在这小结中总结一些敏感危险函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">phpinfo()</div><div class="line">测试用例：phpinfo()</div><div class="line">描述：输出关于PHP配置的信息。</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/1.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">passthru()</div><div class="line">测试用例：passthru(&apos;dir&apos;)或者passthru(&apos;ls&apos;)</div><div class="line">描述：执行外部程序并且显示原始输出</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/3.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">exec()</div><div class="line">测试用例：exec(&apos;whoami&apos;)</div><div class="line">描述：执行一个外部程序</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/4.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">system()</div><div class="line">测试用例：</div><div class="line">描述：执行外部程序，并且显示输出</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/4.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">shell_exec()</div><div class="line">测试用例：shell_exec()</div><div class="line">描述：通过shell环境执行命令，并且将完整的输出以字符串的方式返回。</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/4.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">proc_open()</div><div class="line">测试用例：$p = proc_open(&quot;net user&quot;, array(array(&quot;pipe&quot;,&quot;r&quot;), array(&quot;pipe&quot;,&quot;w&quot;), array(&quot;pipe&quot;,&quot;w&quot;)), $pipes)</div><div class="line">功能描述：执行一个命令，并且打开用来输入/输出的文件指针</div><div class="line">版本范围：(PHP 4 &gt;= 4.3.0, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/6.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">proc_get_status()</div><div class="line">测试用例：proc_get_status($proc)</div><div class="line">功能描述：获取由proc_open()函数打开的进程的信息</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/16.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">popen()</div><div class="line">测试用例：popen(&quot;whoami&quot;, &quot;r&quot;)</div><div class="line">功能描述：打开进程文件指针</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/11.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">chroot()</div><div class="line">测试用例：chroot(&quot;/&quot;)</div><div class="line">描述：改变根目录，本函数仅在系统支持且运行于CLI，CGI或嵌入SAPI版本时才能正确工作。使用权限为root。此函数不能在Windows平台下实现。</div><div class="line">版本范围：(PHP 4 &gt;= 4.0.5, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/5.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">scandir()</div><div class="line">测试用例：scandir(&apos;.&apos;)或scandir(&apos;c:/&apos;)</div><div class="line">描述：列出指定路径中的文件和目录</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/2.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ini_alter()或ini_set()</div><div class="line">测试用例：ini_alter(&apos;display_error&apos;, &apos;0&apos;)或者ini_set(&quot;display_error&quot;, &quot;0&quot;)</div><div class="line">功能描述：为一个配置选项设置值</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div><div class="line">可配置参数清单：http://php.net/manual/zh/ini.list.php</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/7.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ini_restore()</div><div class="line">测试用例：ini_restore($setting)</div><div class="line">功能描述：恢复配置选项的值</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/17.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">putenv()</div><div class="line">测试用例：putenv(&quot;ABC=test&quot;)</div><div class="line">功能描述：设置环境变量</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/8.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">pfsockopen()</div><div class="line">测试用例：pfsockopen(&quot;www.baidu.com&quot;, 80, $errno, $errstr, 30)</div><div class="line">功能描述：打开一个持久的网络连接或者Unix套接字连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图:</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/10.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">fsockopen()</div><div class="line">测试用例：fsockopen(&quot;www.baidu.com&quot;, 80, $error, $errstr, 30)</div><div class="line">功能描述：打开一个网络连接或者一个Unix套接字连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/9.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">stream_socket_server()</div><div class="line">测试用例：stream_socket_server(&quot;tcp://0.0.0.0:8000&quot;, $errno, $errstr)</div><div class="line">功能描述：建立一个Internet或者Unix域的服务连接</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/12.png" alt="ByPupil" title="ByPupil">
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/13.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">curl_exec()</div><div class="line">测试用例：curl_exec($ch)</div><div class="line">功能描述：执行cURL会话</div><div class="line">版本范围：(PHP 4 &gt;= 4.0.2, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/32.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">curl_multi_exec()</div><div class="line">测试用例：curl_multi_exec($mh, $active)</div><div class="line">功能描述：运行当前cURL句柄的子连接</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">chgrp()</div><div class="line">测试用例：chgrp($filename, 2)</div><div class="line">功能描述：改变文件所属的组</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/14.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">chown()</div><div class="line">测试用例：chown($filename, $user_name)</div><div class="line">功能描述：改变文件所有者</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/15.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dl()</div><div class="line">测试用例：dl(&apos;php_sqlite.dll&apos;)</div><div class="line">功能描述：运行时载入一个PHP扩展</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/18.png" alt="ByPupil" title="ByPupil">
+<p><code>此函数被某些SAPI移除了。</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">openlog()</div><div class="line">测试用例：openlog(&quot;myprogram&quot;, 0, LOG_LOCAL0)</div><div class="line">功能描述：与系统日志打开连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">syslog()</div><div class="line">测试用例：syslog(&quot;My syslog message&quot;)</div><div class="line">功能描述：生成系统日志消息</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/19.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">readlink()</div><div class="line">测试用例：readlink(&apos;/vmlinuz&apos;)</div><div class="line">功能描述：返回符号连接指向的目标</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<p><code>运行 PHP 于Vista、Server 2008 或更高版本才能正常使用。</code><br><img src="/2018/05/13/PHP集成环境默认配置之disable-function/20.png" alt="ByPupil" title="ByPupil"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">symlink()</div><div class="line">测试用例：symlink($target, $link)</div><div class="line">功能描述：建立符号连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<p><code>运行 PHP 于Vista、Server 2008 或更高版本才能正常使用。</code></p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/21.png" alt="ByPupil" title="ByPupil">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">highlight_file()或show_source()</div><div class="line">测试用例：highlight_file(__FILE__)，show_source(__FILE__)</div><div class="line">功能描述：语法高亮一个文件</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/30.png" alt="ByPupil" title="ByPupil">
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/31.png" alt="ByPupil" title="ByPupil">
+<h2 id="0x02-PHPStudy检测"><a href="#0x02-PHPStudy检测" class="headerlink" title="0x02 PHPStudy检测"></a>0x02 PHPStudy检测</h2><p><strong>PHPStudy简介</strong></p>
+<p>该程序包集成最新的Apache+PHP+MySQL+phpMyAdmin+ZendOptimizer,一次性安装，无须配置即可使用，是非常方便、好用的PHP调试环境该程序不仅包括PHP调试环境，还包括了开发工具、开发手册等·总之学习PHP只需一个包。</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/22.png" alt="ByPupil" title="ByPupil">
+<p><strong>配置检测</strong></p>
+<p><code>PHPStudy</code>版本为：<code>20180211</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/23.png" alt="ByPupil" title="ByPupil">
+<p>该参数项是为空的，说明PHPStduy并没有关注这一点？再次看PHPStudy的简介，这是PHP调试打开环境并不是可上线的生产环境。对于使用PHPStudy作为生产环境的站长是否需要反思下这个问题。</p>
+<h2 id="0x03-XAMPP检测"><a href="#0x03-XAMPP检测" class="headerlink" title="0x03 XAMPP检测"></a>0x03 XAMPP检测</h2><p><strong>XAMPP简介</strong></p>
+<p>XAMPP（Apache+MySQL+PHP+PERL）是一个功能强大的建站集成软件包。这个软件包原来的名字是 LAMPP，但是为了避免误解，最新的几个版本就改名为 XAMPP 了。它可以在Windows、Linux、Solaris、Mac OS X 等多种操作系统下安装使用，支持多语言：英文、简体中文、繁体中文、韩文、俄文、日文等。</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/24.png" alt="ByPupil" title="ByPupil">
+<p><strong>配置检测</strong></p>
+<p><code>XAMPP</code>版本为：<code>win32-5.6.35-0-VC11</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/25.png" alt="ByPupil" title="ByPupil">
+<p>该参数是空的，XAMPP没有对其<code>disable_functions</code>跟PHPStudy的做法是一样的。</p>
+<h2 id="0x04-WAMP检测"><a href="#0x04-WAMP检测" class="headerlink" title="0x04 WAMP检测"></a>0x04 WAMP检测</h2><p><strong>WAMP简介</strong></p>
+<p>Windows下的Apache+Mysql/MariaDB+Perl/PHP/Python，一组常用来搭建动态网站或者服务器的开源软件，本身都是各自独立的程序，但是因为常被放在一起使用，拥有了越来越高的兼容度，共同组成了一个强大的Web应用程序平台。随着开源潮流的蓬勃发展，开放源代码的LAMP已经与J2EE和.Net商业软件形成三足鼎立之势，并且该软件开发的项目在软件方面的投资成本较低，因此受到整个IT界的关注。LAMP是基于Linux，Apache，MySQL/MariaDB和PHP的开放资源网络开发平台，PHP是一种有时候用Perl或Python可代替的编程语言。这个术语来自欧洲，在那里这些程序常用来作为一种标准开发环境。名字来源于每个程序的第一个字母。每个程序在所有权里都符合开放源代码标准：Linux是开放系统；Apache是最通用的网络服务器；mySQL是带有基于网络管理附加工具的关系数据库；PHP是流行的对象脚本语言，它包含了多数其它语言的优秀特征来使得它的网络开发更加有效。开发者在Windows操作系统下使用这些Linux环境里的工具称为使用WAMP。</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/26.png" alt="ByPupil" title="ByPupil">
+<p><strong>配置检测</strong></p>
+<p><code>WAMP</code>版本为：<code>3.1.3</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/27.png" alt="ByPupil" title="ByPupil">
+<p>该参数是空的，WAMP没有对其<code>disable_functions</code>进行合理配置。</p>
+<h2 id="0x05-upupw检测"><a href="#0x05-upupw检测" class="headerlink" title="0x05 upupw检测"></a>0x05 upupw检测</h2><p><strong>upupw简介</strong></p>
+<p>UPUPW绿色服务器平台是目前Windows下最具特色的免费服务器PHP套件。包括Apache,Nginx和Kangle三大核心版本,其中Kangle全能版支持IOCP工作模型,支持PHP,ASP,ASP.NET解析语言,更适应Win服务器的高效生产工作!UPUPW PHP套件简化了PHP环境搭建步骤,一个压缩包解压到不含中文和空格的任意磁盘目录即可运行.适用于VPS,云主机,服务器架设网站,也适用于本地开发和测试PHP程序.绿色,安全,稳定,高速!</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/28.png" alt="ByPupil" title="ByPupil">
+<p><strong>配置检测</strong></p>
+<p><code>upupw</code>版本为：<code>5.6_64</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
+<img src="/2018/05/13/PHP集成环境默认配置之disable-function/29.png" alt="ByPupil" title="ByPupil">
+<p>在该配置文件中，<code>disable_functions</code>参数做了部分的限制，说明制作该集成环境时，制作者已经注意了这个问题。</p>
+<p><strong>总结</strong></p>
+<p>PHPStudy，XAMPP，WAMP都是开发测试环境，并不是一个合适的生产环境。如果一定要使用该集成环境，将没有写在代码中的危险函数写入到<code>disable_function</code>。而upupw意识到了危险函数存在的情况，所以它做了一定的限制（主要是命令执行的函数），该集成环境可以一定程度上有防护。个人建议：对于上线的产品，集成环境一定要自己配置，细化到每一个重要的配置项。才能更大程度的提高网站的安全性。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -190,95 +359,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://bypupil.github.io/2018/05/13/PHP集成环境默认配置之disable-function/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/01/适合安全爱好者的截图神器/" class="archive-article-date">
-  	<time datetime="2018-05-01T06:29:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-01</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/01/适合安全爱好者的截图神器/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">适合安全爱好者的截图神器</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/01/适合安全爱好者的截图神器/">适合安全爱好者的截图神器</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">神器</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/12/Tor-Privoxy实现匿名/" class="archive-article-date">
-  	<time datetime="2018-03-11T16:31:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/12/Tor-Privoxy实现匿名/">Tor+Privoxy实现匿名</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">渗透测试</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -301,8 +481,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
