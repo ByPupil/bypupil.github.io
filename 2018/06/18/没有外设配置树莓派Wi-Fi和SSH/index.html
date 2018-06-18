@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://bypupil.github.io">
-  <title>Archives: 2017 | ByPupil&#39;s blog</title>
+  <title>没有外设配置树莓派Wi-Fi和SSH | ByPupil&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ByPupil&#39;s blog">
-<meta property="og:url" content="https://bypupil.github.io/archives/2017/index.html">
+  <meta name="description" content="0x00 前言之前每次使用Raspberry，通过Win32DiskImage将系统写入SD卡后。总是需要使用外设配置网络和远程连接。外设仅仅在第一次使用的时候需要用到，之后就不再需要，这是很大程度上浪费资源。 在Raspberry 3B发布后不久，官方Raspbian系统加入了开机前对Wi-Fi网络的配置。方便了重新刷系统之后配置网络的操作。一般配置后的IP都是动态分配的，要获取设备的真正的ip">
+<meta name="keywords" content="树莓派">
+<meta property="og:type" content="article">
+<meta property="og:title" content="没有外设配置树莓派Wi-Fi和SSH">
+<meta property="og:url" content="https://bypupil.github.io/2018/06/18/没有外设配置树莓派Wi-Fi和SSH/index.html">
 <meta property="og:site_name" content="ByPupil&#39;s blog">
+<meta property="og:description" content="0x00 前言之前每次使用Raspberry，通过Win32DiskImage将系统写入SD卡后。总是需要使用外设配置网络和远程连接。外设仅仅在第一次使用的时候需要用到，之后就不再需要，这是很大程度上浪费资源。 在Raspberry 3B发布后不久，官方Raspbian系统加入了开机前对Wi-Fi网络的配置。方便了重新刷系统之后配置网络的操作。一般配置后的IP都是动态分配的，要获取设备的真正的ip">
+<meta property="og:updated_time" content="2018-06-18T05:38:54.676Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ByPupil&#39;s blog">
+<meta name="twitter:title" content="没有外设配置树莓派Wi-Fi和SSH">
+<meta name="twitter:description" content="0x00 前言之前每次使用Raspberry，通过Win32DiskImage将系统写入SD卡后。总是需要使用外设配置网络和远程连接。外设仅仅在第一次使用的时候需要用到，之后就不再需要，这是很大程度上浪费资源。 在Raspberry 3B发布后不久，官方Raspbian系统加入了开机前对Wi-Fi网络的配置。方便了重新刷系统之后配置网络的操作。一般配置后的IP都是动态分配的，要获取设备的真正的ip">
   
     <link rel="alternative" href="/atom.xml" title="ByPupil&#39;s blog" type="application/atom+xml">
   
@@ -149,402 +154,185 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-没有外设配置树莓派Wi-Fi和SSH" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      没有外设配置树莓派Wi-Fi和SSH
+    </h1>
+  
+
+        
+        <a href="/2018/06/18/没有外设配置树莓派Wi-Fi和SSH/" class="archive-article-date">
+  	<time datetime="2018-06-18T04:37:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-18</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>之前每次使用<code>Raspberry</code>，通过<code>Win32DiskImage</code>将系统写入<code>SD卡</code>后。总是需要使用外设配置网络和远程连接。外设仅仅在第一次使用的时候需要用到，之后就不再需要，这是很大程度上浪费资源。</p>
+<p>在<code>Raspberry 3B</code>发布后不久，官方<code>Raspbian</code>系统加入了开机前对<code>Wi-Fi</code>网络的配置。方便了重新刷系统之后配置网络的操作。一般配置后的IP都是动态分配的，要获取设备的真正的ip可以通过无线路由器的后台获取，也可以使用nmap扫描子网获取。</p>
+<h2 id="0x01-配置Wi-Fi网络"><a href="#0x01-配置Wi-Fi网络" class="headerlink" title="0x01 配置Wi-Fi网络"></a>0x01 配置Wi-Fi网络</h2><p><code>SD卡</code>写入镜像后，在未启动<code>Raspberry</code>的状态下修改<code>/boot/wpa_supplicant.conf</code>配置文件的<code>Wi-Fi</code>的<code>SSID</code>和密码，通电后，就会读取该配置文件并连接<code>Wi-Fi</code>设备。若该目录下没有<code>wpa_supplicant.conf</code>配置文件，新建<code>wpa_supplicant.conf</code>文件，按照以下格式填写内容并保存<code>wpa_supplicant.conf</code>文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">country=CN</div><div class="line">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev</div><div class="line">update_config=1</div><div class="line"> </div><div class="line">network=&#123;</div><div class="line">ssid=&quot;WiFi-A&quot;</div><div class="line">psk=&quot;12345678&quot;</div><div class="line">key_mgmt=WPA-PSK</div><div class="line">priority=1</div><div class="line">&#125;</div><div class="line"> </div><div class="line">network=&#123;</div><div class="line">ssid=&quot;WiFi-B&quot;</div><div class="line">psk=&quot;12345678&quot;</div><div class="line">key_mgmt=WPA-PSK</div><div class="line">priority=2</div><div class="line">scan_ssid=1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>参数介绍：</p>
+<p><strong>ssid：</strong>网络的ssid</p>
+<p><strong>psk：</strong>密码</p>
+<p><strong>priority：</strong>连接优先级，数字越大优先级越高(参数值大于等于0)</p>
+<p><strong>scan_ssid：</strong>连接隐藏WiFi时需要指定该值为1</p>
+<h2 id="0x02-Wi-Fi配置demo"><a href="#0x02-Wi-Fi配置demo" class="headerlink" title="0x02 Wi-Fi配置demo"></a>0x02 Wi-Fi配置demo</h2><p><strong>无WiFi密码</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=&quot;你的无线网络名称（ssid）&quot;</div><div class="line">key_mgmt=NONE</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>使用WEP加密</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=&quot;你的无线网络名称（ssid）&quot;</div><div class="line">key_mgmt=NONE</div><div class="line">wep_key0=&quot;你的wifi密码&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>使用WPA/WPA2加密</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=&quot;你的无线网络名称（ssid）&quot;</div><div class="line">key_mgmt=WPA-PSK</div><div class="line">psk=&quot;你的wifi密码&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>技巧</strong></p>
+<p>如果不清楚Wi-Fi的加密模式，首先让手机连接上<code>Wi-Fi</code>，然后可以使用<code>Andriod</code>手机应用<code>root explorer</code>打开/data/misc/wifi/wpa/wpa_supplicant.conf，查看<code>Wi-Fi</code>信息。</p>
+<h2 id="0x03-开启SSH服务"><a href="#0x03-开启SSH服务" class="headerlink" title="0x03 开启SSH服务"></a>0x03 开启SSH服务</h2><p>自<code>2016-11</code>官方发布的<code>Raspbian</code>系统镜像后，系统默认禁用了<code>SSH</code>服务。重新开启只需要进入根目录下，新建一个名为<code>ssh</code>空白文件就可以了。</p>
+<h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://shumeipai.nxez.com/2017/09/13/raspberry-pi-network-configuration-before-boot.html" target="_blank" rel="external">无屏幕和键盘配置树莓派WiFi和SSH</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/11/WSL初体验/" class="archive-article-date">
-  	<time datetime="2017-12-11T05:14:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/11/WSL初体验/">WSL初体验</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Windows工具</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">树莓派</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://bypupil.github.io/2018/06/18/没有外设配置树莓派Wi-Fi和SSH/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/19/Android软件分析中的的Hello-Word/" class="archive-article-date">
-  	<time datetime="2017-11-19T09:23:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/13/PHP集成环境默认配置之disable-function/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PHP集成环境默认配置之disable_function</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/19/Android软件分析中的的Hello-Word/">Android软件分析中的的Hello Word</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/28/中国菜刀在Linux下飞/" class="archive-article-date">
-  	<time datetime="2017-10-28T11:12:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/28/中国菜刀在Linux下飞/">中国菜刀在Linux下飞</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/22/曾经就该做的程序设计-LeetCode/" class="archive-article-date">
-  	<time datetime="2017-10-22T08:16:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/22/曾经就该做的程序设计-LeetCode/">曾经就该做的程序设计--LeetCode</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">程序设计</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/24/不会编程的大四狗/" class="archive-article-date">
-  	<time datetime="2017-09-24T09:22:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/24/不会编程的大四狗/">不会编程的大四狗</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">programme</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/23/不会这几条命令，如何内网搅屎/" class="archive-article-date">
-  	<time datetime="2017-09-23T08:25:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/23/不会这几条命令，如何内网搅屎/">不会这几条命令，如何内网搅屎</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/18/CVE-2017-9603-分析/" class="archive-article-date">
-  	<time datetime="2017-09-18T05:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/18/CVE-2017-9603-分析/">CVE-2017-9603 分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">code audit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/11/南邮CTF综合题2WriteUp/" class="archive-article-date">
-  	<time datetime="2017-09-10T16:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/11/南邮CTF综合题2WriteUp/">南邮CTF综合题2WriteUp</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/25/74CMS-v3-2-宽字节注入/" class="archive-article-date">
-  	<time datetime="2017-08-24T16:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/25/74CMS-v3-2-宽字节注入/">74CMS v3.2 - 宽字节注入</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">code audit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/23/FineCMS-v5-0-10任意文件上传/" class="archive-article-date">
-  	<time datetime="2017-08-23T13:39:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/23/FineCMS-v5-0-10任意文件上传/">FineCMS v5.0.10任意文件上传</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">code audit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -567,8 +355,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

