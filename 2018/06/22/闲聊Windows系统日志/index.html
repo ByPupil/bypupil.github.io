@@ -6,14 +6,41 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://bypupil.github.io">
-  <title>ByPupil&#39;s blog</title>
+  <title>闲聊Windows系统日志 | ByPupil&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ByPupil&#39;s blog">
-<meta property="og:url" content="https://bypupil.github.io/index.html">
+  <meta name="description" content="0x00 前言最近遇到不少应急都提出一个需求，能不能溯源啊？这个事还真不好干，你把证据，犯案时间都确定的时候，要求翻看监控(日志)对应犯罪嫌疑人时，突然说监控(日志)没有记录。不过现在都要求保留至少6个月的日志，因此这种原因会少了很多，而然我对于Windows中系统日志不了解，在解读时经常摸不着头脑，所以就认真的分析了evtx格式的系统日志。这篇文章可能记录的不是很全面，师傅们多多指教。 0x01">
+<meta property="og:type" content="article">
+<meta property="og:title" content="闲聊Windows系统日志">
+<meta property="og:url" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/index.html">
 <meta property="og:site_name" content="ByPupil&#39;s blog">
+<meta property="og:description" content="0x00 前言最近遇到不少应急都提出一个需求，能不能溯源啊？这个事还真不好干，你把证据，犯案时间都确定的时候，要求翻看监控(日志)对应犯罪嫌疑人时，突然说监控(日志)没有记录。不过现在都要求保留至少6个月的日志，因此这种原因会少了很多，而然我对于Windows中系统日志不了解，在解读时经常摸不着头脑，所以就认真的分析了evtx格式的系统日志。这篇文章可能记录的不是很全面，师傅们多多指教。 0x01">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/1.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/2.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/3.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/4.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/5.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/6.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/7.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/8.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/9.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/10.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/11.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/12.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/13.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/14.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/15.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/16.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/17.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/18.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/19.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/20.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/21.png">
+<meta property="og:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/7.png">
+<meta property="og:updated_time" content="2018-06-21T18:23:32.531Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ByPupil&#39;s blog">
+<meta name="twitter:title" content="闲聊Windows系统日志">
+<meta name="twitter:description" content="0x00 前言最近遇到不少应急都提出一个需求，能不能溯源啊？这个事还真不好干，你把证据，犯案时间都确定的时候，要求翻看监控(日志)对应犯罪嫌疑人时，突然说监控(日志)没有记录。不过现在都要求保留至少6个月的日志，因此这种原因会少了很多，而然我对于Windows中系统日志不了解，在解读时经常摸不着头脑，所以就认真的分析了evtx格式的系统日志。这篇文章可能记录的不是很全面，师傅们多多指教。 0x01">
+<meta name="twitter:image" content="https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/1.png">
   
     <link rel="alternative" href="/atom.xml" title="ByPupil&#39;s blog" type="application/atom+xml">
   
@@ -149,16 +176,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-闲聊Windows系统日志" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-闲聊Windows系统日志" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/22/闲聊Windows系统日志/">闲聊Windows系统日志</a>
+    <h1 class="article-title" itemprop="name">
+      闲聊Windows系统日志
     </h1>
   
 
@@ -274,6 +299,27 @@
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -281,16 +327,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/22/闲聊Windows系统日志/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://bypupil.github.io/2018/06/22/闲聊Windows系统日志/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/18/没有外设配置树莓派Wi-Fi和SSH/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">没有外设配置树莓派Wi-Fi和SSH</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -310,925 +415,14 @@
 
 
 
-
-  
-    <article id="post-没有外设配置树莓派Wi-Fi和SSH" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/18/没有外设配置树莓派Wi-Fi和SSH/">没有外设配置树莓派Wi-Fi和SSH</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/18/没有外设配置树莓派Wi-Fi和SSH/" class="archive-article-date">
-  	<time datetime="2018-06-18T04:37:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>之前每次使用<code>Raspberry</code>，通过<code>Win32DiskImage</code>将系统写入<code>SD卡</code>后。总是需要使用外设配置网络和远程连接。外设仅仅在第一次使用的时候需要用到，之后就不再需要，这是很大程度上浪费资源。</p>
-<p>在<code>Raspberry 3B</code>发布后不久，官方<code>Raspbian</code>系统加入了开机前对<code>Wi-Fi</code>网络的配置。方便了重新刷系统之后配置网络的操作。一般配置后的IP都是动态分配的，要获取设备的真正的ip可以通过无线路由器的后台获取，也可以使用nmap扫描子网获取。</p>
-<h2 id="0x01-配置Wi-Fi网络"><a href="#0x01-配置Wi-Fi网络" class="headerlink" title="0x01 配置Wi-Fi网络"></a>0x01 配置Wi-Fi网络</h2><p><code>SD卡</code>写入镜像后，在未启动<code>Raspberry</code>的状态下修改<code>/boot/wpa_supplicant.conf</code>配置文件的<code>Wi-Fi</code>的<code>SSID</code>和密码，通电后，就会读取该配置文件并连接<code>Wi-Fi</code>设备。若该目录下没有<code>wpa_supplicant.conf</code>配置文件，新建<code>wpa_supplicant.conf</code>文件，按照以下格式填写内容并保存<code>wpa_supplicant.conf</code>文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">country=CN</div><div class="line">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev</div><div class="line">update_config=1</div><div class="line"> </div><div class="line">network=&#123;</div><div class="line">ssid=&quot;WiFi-A&quot;</div><div class="line">psk=&quot;12345678&quot;</div><div class="line">key_mgmt=WPA-PSK</div><div class="line">priority=1</div><div class="line">&#125;</div><div class="line"> </div><div class="line">network=&#123;</div><div class="line">ssid=&quot;WiFi-B&quot;</div><div class="line">psk=&quot;12345678&quot;</div><div class="line">key_mgmt=WPA-PSK</div><div class="line">priority=2</div><div class="line">scan_ssid=1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>参数介绍：</p>
-<p><strong>ssid：</strong>网络的ssid</p>
-<p><strong>psk：</strong>密码</p>
-<p><strong>priority：</strong>连接优先级，数字越大优先级越高(参数值大于等于0)</p>
-<p><strong>scan_ssid：</strong>连接隐藏WiFi时需要指定该值为1</p>
-<h2 id="0x02-Wi-Fi配置demo"><a href="#0x02-Wi-Fi配置demo" class="headerlink" title="0x02 Wi-Fi配置demo"></a>0x02 Wi-Fi配置demo</h2><p><strong>无WiFi密码</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=&quot;你的无线网络名称（ssid）&quot;</div><div class="line">key_mgmt=NONE</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>使用WEP加密</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=&quot;你的无线网络名称（ssid）&quot;</div><div class="line">key_mgmt=NONE</div><div class="line">wep_key0=&quot;你的wifi密码&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>使用WPA/WPA2加密</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=&quot;你的无线网络名称（ssid）&quot;</div><div class="line">key_mgmt=WPA-PSK</div><div class="line">psk=&quot;你的wifi密码&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>技巧</strong></p>
-<p>如果不清楚Wi-Fi的加密模式，首先让手机连接上<code>Wi-Fi</code>，然后可以使用<code>Andriod</code>手机应用<code>root explorer</code>打开/data/misc/wifi/wpa/wpa_supplicant.conf，查看<code>Wi-Fi</code>信息。</p>
-<h2 id="0x03-开启SSH服务"><a href="#0x03-开启SSH服务" class="headerlink" title="0x03 开启SSH服务"></a>0x03 开启SSH服务</h2><p>自<code>2016-11</code>官方发布的<code>Raspbian</code>系统镜像后，系统默认禁用了<code>SSH</code>服务。重新开启只需要进入根目录下，新建一个名为<code>ssh</code>空白文件就可以了。</p>
-<h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://shumeipai.nxez.com/2017/09/13/raspberry-pi-network-configuration-before-boot.html" target="_blank" rel="external">无屏幕和键盘配置树莓派WiFi和SSH</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">树莓派</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/18/没有外设配置树莓派Wi-Fi和SSH/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-PHP集成环境默认配置之disable-function" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/13/PHP集成环境默认配置之disable-function/">PHP集成环境默认配置之disable_function</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/13/PHP集成环境默认配置之disable-function/" class="archive-article-date">
-  	<time datetime="2018-05-12T16:26:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>国内大量使用了Apache+MySQL+PHP的web架构，满足该架构的集成环境在网上可以找到很多，例如：PHPStudy，XAMPP，WAMP，LAMP等。这篇文章主要对这些集成环境进行测试。<br>在日益提高对web安全的意识，开放者会使用了addslashes对数据库查询的参数过滤，使用<code>escapeshellcmd</code>对命令执行的参数过滤等。然而往往忘记了在php的配置文件中存在 <code>disable_function</code>参数。该参数可以禁用一些危险性较高，但在开发中缺没有使用的函数。</p>
-<h2 id="0x01-PHP常见危险函数"><a href="#0x01-PHP常见危险函数" class="headerlink" title="0x01 PHP常见危险函数"></a>0x01 PHP常见危险函数</h2><p>使用PHP开发站点时，存在一些在生产环境中使用频率不高，但是具有较高的危险性。在这小结中总结一些敏感危险函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">phpinfo()</div><div class="line">测试用例：phpinfo()</div><div class="line">描述：输出关于PHP配置的信息。</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/1.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">passthru()</div><div class="line">测试用例：passthru(&apos;dir&apos;)或者passthru(&apos;ls&apos;)</div><div class="line">描述：执行外部程序并且显示原始输出</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/3.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">exec()</div><div class="line">测试用例：exec(&apos;whoami&apos;)</div><div class="line">描述：执行一个外部程序</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/4.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">system()</div><div class="line">测试用例：</div><div class="line">描述：执行外部程序，并且显示输出</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/4.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">shell_exec()</div><div class="line">测试用例：shell_exec()</div><div class="line">描述：通过shell环境执行命令，并且将完整的输出以字符串的方式返回。</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/4.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">proc_open()</div><div class="line">测试用例：$p = proc_open(&quot;net user&quot;, array(array(&quot;pipe&quot;,&quot;r&quot;), array(&quot;pipe&quot;,&quot;w&quot;), array(&quot;pipe&quot;,&quot;w&quot;)), $pipes)</div><div class="line">功能描述：执行一个命令，并且打开用来输入/输出的文件指针</div><div class="line">版本范围：(PHP 4 &gt;= 4.3.0, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/6.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">proc_get_status()</div><div class="line">测试用例：proc_get_status($proc)</div><div class="line">功能描述：获取由proc_open()函数打开的进程的信息</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/16.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">popen()</div><div class="line">测试用例：popen(&quot;whoami&quot;, &quot;r&quot;)</div><div class="line">功能描述：打开进程文件指针</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/11.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">chroot()</div><div class="line">测试用例：chroot(&quot;/&quot;)</div><div class="line">描述：改变根目录，本函数仅在系统支持且运行于CLI，CGI或嵌入SAPI版本时才能正确工作。使用权限为root。此函数不能在Windows平台下实现。</div><div class="line">版本范围：(PHP 4 &gt;= 4.0.5, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/5.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">scandir()</div><div class="line">测试用例：scandir(&apos;.&apos;)或scandir(&apos;c:/&apos;)</div><div class="line">描述：列出指定路径中的文件和目录</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/2.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ini_alter()或ini_set()</div><div class="line">测试用例：ini_alter(&apos;display_error&apos;, &apos;0&apos;)或者ini_set(&quot;display_error&quot;, &quot;0&quot;)</div><div class="line">功能描述：为一个配置选项设置值</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div><div class="line">可配置参数清单：http://php.net/manual/zh/ini.list.php</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/7.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ini_restore()</div><div class="line">测试用例：ini_restore($setting)</div><div class="line">功能描述：恢复配置选项的值</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/17.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">putenv()</div><div class="line">测试用例：putenv(&quot;ABC=test&quot;)</div><div class="line">功能描述：设置环境变量</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/8.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">pfsockopen()</div><div class="line">测试用例：pfsockopen(&quot;www.baidu.com&quot;, 80, $errno, $errstr, 30)</div><div class="line">功能描述：打开一个持久的网络连接或者Unix套接字连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图:</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/10.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">fsockopen()</div><div class="line">测试用例：fsockopen(&quot;www.baidu.com&quot;, 80, $error, $errstr, 30)</div><div class="line">功能描述：打开一个网络连接或者一个Unix套接字连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/9.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">stream_socket_server()</div><div class="line">测试用例：stream_socket_server(&quot;tcp://0.0.0.0:8000&quot;, $errno, $errstr)</div><div class="line">功能描述：建立一个Internet或者Unix域的服务连接</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/12.png" alt="ByPupil" title="ByPupil">
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/13.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">curl_exec()</div><div class="line">测试用例：curl_exec($ch)</div><div class="line">功能描述：执行cURL会话</div><div class="line">版本范围：(PHP 4 &gt;= 4.0.2, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/32.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">curl_multi_exec()</div><div class="line">测试用例：curl_multi_exec($mh, $active)</div><div class="line">功能描述：运行当前cURL句柄的子连接</div><div class="line">版本范围：(PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">chgrp()</div><div class="line">测试用例：chgrp($filename, 2)</div><div class="line">功能描述：改变文件所属的组</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/14.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">chown()</div><div class="line">测试用例：chown($filename, $user_name)</div><div class="line">功能描述：改变文件所有者</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/15.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dl()</div><div class="line">测试用例：dl(&apos;php_sqlite.dll&apos;)</div><div class="line">功能描述：运行时载入一个PHP扩展</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：高</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/18.png" alt="ByPupil" title="ByPupil">
-<p><code>此函数被某些SAPI移除了。</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">openlog()</div><div class="line">测试用例：openlog(&quot;myprogram&quot;, 0, LOG_LOCAL0)</div><div class="line">功能描述：与系统日志打开连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">syslog()</div><div class="line">测试用例：syslog(&quot;My syslog message&quot;)</div><div class="line">功能描述：生成系统日志消息</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/19.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">readlink()</div><div class="line">测试用例：readlink(&apos;/vmlinuz&apos;)</div><div class="line">功能描述：返回符号连接指向的目标</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<p><code>运行 PHP 于Vista、Server 2008 或更高版本才能正常使用。</code><br><img src="/2018/05/13/PHP集成环境默认配置之disable-function/20.png" alt="ByPupil" title="ByPupil"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">symlink()</div><div class="line">测试用例：symlink($target, $link)</div><div class="line">功能描述：建立符号连接</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<p><code>运行 PHP 于Vista、Server 2008 或更高版本才能正常使用。</code></p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/21.png" alt="ByPupil" title="ByPupil">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">highlight_file()或show_source()</div><div class="line">测试用例：highlight_file(__FILE__)，show_source(__FILE__)</div><div class="line">功能描述：语法高亮一个文件</div><div class="line">版本范围：(PHP 4, PHP 5, PHP 7)</div><div class="line">危险等级：中</div></pre></td></tr></table></figure>
-<p>效果图：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/30.png" alt="ByPupil" title="ByPupil">
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/31.png" alt="ByPupil" title="ByPupil">
-<h2 id="0x02-PHPStudy检测"><a href="#0x02-PHPStudy检测" class="headerlink" title="0x02 PHPStudy检测"></a>0x02 PHPStudy检测</h2><p><strong>PHPStudy简介</strong></p>
-<p>该程序包集成最新的Apache+PHP+MySQL+phpMyAdmin+ZendOptimizer,一次性安装，无须配置即可使用，是非常方便、好用的PHP调试环境该程序不仅包括PHP调试环境，还包括了开发工具、开发手册等·总之学习PHP只需一个包。</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/22.png" alt="ByPupil" title="ByPupil">
-<p><strong>配置检测</strong></p>
-<p><code>PHPStudy</code>版本为：<code>20180211</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/23.png" alt="ByPupil" title="ByPupil">
-<p>该参数项是为空的，说明PHPStduy并没有关注这一点？再次看PHPStudy的简介，这是PHP调试打开环境并不是可上线的生产环境。对于使用PHPStudy作为生产环境的站长是否需要反思下这个问题。</p>
-<h2 id="0x03-XAMPP检测"><a href="#0x03-XAMPP检测" class="headerlink" title="0x03 XAMPP检测"></a>0x03 XAMPP检测</h2><p><strong>XAMPP简介</strong></p>
-<p>XAMPP（Apache+MySQL+PHP+PERL）是一个功能强大的建站集成软件包。这个软件包原来的名字是 LAMPP，但是为了避免误解，最新的几个版本就改名为 XAMPP 了。它可以在Windows、Linux、Solaris、Mac OS X 等多种操作系统下安装使用，支持多语言：英文、简体中文、繁体中文、韩文、俄文、日文等。</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/24.png" alt="ByPupil" title="ByPupil">
-<p><strong>配置检测</strong></p>
-<p><code>XAMPP</code>版本为：<code>win32-5.6.35-0-VC11</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/25.png" alt="ByPupil" title="ByPupil">
-<p>该参数是空的，XAMPP没有对其<code>disable_functions</code>跟PHPStudy的做法是一样的。</p>
-<h2 id="0x04-WAMP检测"><a href="#0x04-WAMP检测" class="headerlink" title="0x04 WAMP检测"></a>0x04 WAMP检测</h2><p><strong>WAMP简介</strong></p>
-<p>Windows下的Apache+Mysql/MariaDB+Perl/PHP/Python，一组常用来搭建动态网站或者服务器的开源软件，本身都是各自独立的程序，但是因为常被放在一起使用，拥有了越来越高的兼容度，共同组成了一个强大的Web应用程序平台。随着开源潮流的蓬勃发展，开放源代码的LAMP已经与J2EE和.Net商业软件形成三足鼎立之势，并且该软件开发的项目在软件方面的投资成本较低，因此受到整个IT界的关注。LAMP是基于Linux，Apache，MySQL/MariaDB和PHP的开放资源网络开发平台，PHP是一种有时候用Perl或Python可代替的编程语言。这个术语来自欧洲，在那里这些程序常用来作为一种标准开发环境。名字来源于每个程序的第一个字母。每个程序在所有权里都符合开放源代码标准：Linux是开放系统；Apache是最通用的网络服务器；mySQL是带有基于网络管理附加工具的关系数据库；PHP是流行的对象脚本语言，它包含了多数其它语言的优秀特征来使得它的网络开发更加有效。开发者在Windows操作系统下使用这些Linux环境里的工具称为使用WAMP。</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/26.png" alt="ByPupil" title="ByPupil">
-<p><strong>配置检测</strong></p>
-<p><code>WAMP</code>版本为：<code>3.1.3</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/27.png" alt="ByPupil" title="ByPupil">
-<p>该参数是空的，WAMP没有对其<code>disable_functions</code>进行合理配置。</p>
-<h2 id="0x05-upupw检测"><a href="#0x05-upupw检测" class="headerlink" title="0x05 upupw检测"></a>0x05 upupw检测</h2><p><strong>upupw简介</strong></p>
-<p>UPUPW绿色服务器平台是目前Windows下最具特色的免费服务器PHP套件。包括Apache,Nginx和Kangle三大核心版本,其中Kangle全能版支持IOCP工作模型,支持PHP,ASP,ASP.NET解析语言,更适应Win服务器的高效生产工作!UPUPW PHP套件简化了PHP环境搭建步骤,一个压缩包解压到不含中文和空格的任意磁盘目录即可运行.适用于VPS,云主机,服务器架设网站,也适用于本地开发和测试PHP程序.绿色,安全,稳定,高速!</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/28.png" alt="ByPupil" title="ByPupil">
-<p><strong>配置检测</strong></p>
-<p><code>upupw</code>版本为：<code>5.6_64</code>。PHP配置项<code>disable_functions</code>内容如下：</p>
-<img src="/2018/05/13/PHP集成环境默认配置之disable-function/29.png" alt="ByPupil" title="ByPupil">
-<p>在该配置文件中，<code>disable_functions</code>参数做了部分的限制，说明制作该集成环境时，制作者已经注意了这个问题。</p>
-<p><strong>总结</strong></p>
-<p>PHPStudy，XAMPP，WAMP都是开发测试环境，并不是一个合适的生产环境。如果一定要使用该集成环境，将没有写在代码中的危险函数写入到<code>disable_function</code>。而upupw意识到了危险函数存在的情况，所以它做了一定的限制（主要是命令执行的函数），该集成环境可以一定程度上有防护。个人建议：对于上线的产品，集成环境一定要自己配置，细化到每一个重要的配置项。才能更大程度的提高网站的安全性。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">code audit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/13/PHP集成环境默认配置之disable-function/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-LeetCode刷题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="LeetCode刷题"><a href="#LeetCode刷题" class="headerlink" title="LeetCode刷题"></a>LeetCode刷题</h2><h3 id="0x01-从排序数组中删除重复项"><a href="#0x01-从排序数组中删除重复项" class="headerlink" title="0x01 从排序数组中删除重复项"></a>0x01 从排序数组中删除重复项</h3><p>描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。</div><div class="line">不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。</div></pre></td></tr></table></figure></p>
-<p>第一次解题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def removeDuplicates(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;</div><div class="line">        i = 0</div><div class="line">        while(i&lt;len(nums)-1):</div><div class="line">            if(nums[i]!=nums[i+1]):</div><div class="line">                i += 1</div><div class="line">            else:</div><div class="line">                del(nums[i+1])</div><div class="line">        return len(nums)</div></pre></td></tr></table></figure>
-<p>不足之处：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">对于参数nums没有进行判断是否是空数组</div></pre></td></tr></table></figure>
-<p>第二次解题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def removeDuplicates(self, nums):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        i = 0</div><div class="line">        if(len(nums) == 0):</div><div class="line">            return 0</div><div class="line">        while(i &lt; len(nums) - 1):</div><div class="line">            if(nums[i] != nums[i+1]):</div><div class="line">                i += 1</div><div class="line">            else:</div><div class="line">                del(nums[i+1])</div><div class="line">        return len(nums)</div></pre></td></tr></table></figure>
-<p>不足之处：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">此处删除元素使用了del函数。</div></pre></td></tr></table></figure>
-<p>第三次解题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def removeDuplicates(self, nums):</div><div class="line">        i = 1</div><div class="line">        if(len(nums) == 0):</div><div class="line">            return 0</div><div class="line">        j = 1</div><div class="line">        while(j &lt; len(nums)):</div><div class="line">            if(nums[i] == nums[i-1]):</div><div class="line">                i += 1</div><div class="line">            else:</div><div class="line">                nums[j] = nums[i]</div><div class="line">                j += 1</div><div class="line">                i += 1</div><div class="line">        return j</div></pre></td></tr></table></figure>
-<p>不足之处：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">i += 1代码冗余了，不优雅。</div></pre></td></tr></table></figure>
-<p>第四次做题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def removeDuplicates(self, nums):</div><div class="line">        i = 1</div><div class="line">        j = 1</div><div class="line">        if(len(nums) == 0):</div><div class="line">            return 0</div><div class="line">        while(i&lt;len(nums)):</div><div class="line">            if(nums[i] != nums[i-1]):</div><div class="line">                nums[j] = nums[i]</div><div class="line">                j += 1</div><div class="line">            i += 1</div><div class="line">        return j</div></pre></td></tr></table></figure>
-<h3 id="0x02-买卖股票的最佳时机-II"><a href="#0x02-买卖股票的最佳时机-II" class="headerlink" title="0x02 买卖股票的最佳时机 II"></a>0x02 买卖股票的最佳时机 II</h3><p>描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</div><div class="line">设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。</div><div class="line">注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</div></pre></td></tr></table></figure></p>
-<p>第一次解题：(贪心算法)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class Solution:</div><div class="line">    def maxProfit(self, prices):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type prices: List[int]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        max = 0</div><div class="line">        i = 1</div><div class="line">        if(len(prices) == 0):</div><div class="line">            return 0</div><div class="line">        while(i &lt; len(prices)):</div><div class="line">            if((prices[i] - prices[i-1]) &gt; 0):</div><div class="line">                max = prices[i] - prices[i-1]</div><div class="line">            i += 1</div><div class="line">        return max</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/04/LeetCode刷题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-适合安全爱好者的截图神器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/01/适合安全爱好者的截图神器/">适合安全爱好者的截图神器</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/01/适合安全爱好者的截图神器/" class="archive-article-date">
-  	<time datetime="2018-05-01T06:29:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>在乙方安全公司中，信息安全从业者常常需要编写渗透测试，应急响应，漏洞分析等文档。文档编写时需要搭配相关截图来解释说明，此时一款强大的，绿色免费截图工具正是我们作为信息安全从业者强烈渴望的。之前一直使用的是windows自带的截图工具和QQ的截图功能，在朋友推荐下开始使用截图神器<a href="https://www.snipaste.com/" target="_blank" rel="external">Snipaste</a>。跟着<a href="https://docs.snipaste.com/zh-cn/" target="_blank" rel="external">官方文档</a>学习了一遍，个人感觉特别适合信息安全从业者。</p>
-<h2 id="0x01-Snipaste简介"><a href="#0x01-Snipaste简介" class="headerlink" title="0x01 Snipaste简介"></a>0x01 Snipaste简介</h2><p>Snipaste 不只是截图，善用贴图功能将帮助你提升工作效率！</p>
-<h2 id="0x02-基础操作"><a href="#0x02-基础操作" class="headerlink" title="0x02 基础操作"></a>0x02 基础操作</h2><p><strong>截屏</strong></p>
-<ul>
-<li>快捷键（默认F1）</li>
-</ul>
-<p><strong>保存截图（成功截图）</strong></p>
-<ul>
-<li>保存到剪贴板（Ctrl + C / Enter / 双击 截屏区域）</li>
-<li>保存到文件（Ctrl + S）</li>
-<li>保存到贴图（Ctrl + T）</li>
-<li>快速保存（Ctrl + Shift + S）</li>
-</ul>
-<p><strong>取消当前截图</strong></p>
-<ul>
-<li>快捷键（Esc）</li>
-</ul>
-<p><strong>回放截图记录</strong></p>
-<ul>
-<li>快捷键（,(后退)或.(前进)）</li>
-</ul>
-<p><strong>逐像素控制截取区域</strong></p>
-<ul>
-<li>快捷键（WASD）</li>
-</ul>
-<p><strong>放大镜</strong></p>
-<ul>
-<li>快捷键（Alt）</li>
-</ul>
-<p><strong>取色</strong></p>
-<ul>
-<li>当放大镜可见的时候，按下 C 可复制该像素点的颜色值（RGB/Hex）。之后可以 F3 将它贴出，或者 Ctrl + V 贴到其他程序里</li>
-<li>可按下 Shift 来切换颜色格式</li>
-</ul>
-<p><strong>贴图</strong></p>
-<ul>
-<li>贴图是将系统剪贴板中的内容转化成图片，然后作为窗口置顶显示。所以，能否贴出来、贴出来的是什么，取决于系统剪贴板中的内容。</li>
-<li>快捷键（F3）</li>
-<li>旋转（1,2）</li>
-<li>翻转（3,4）</li>
-</ul>
-<h2 id="0x03-更多"><a href="#0x03-更多" class="headerlink" title="0x03 更多"></a>0x03 更多</h2><p>这里只是介绍了一些常用的操作，如果想了解更多<code>Snipaste</code>操作，可以查看<a href="https://www.v2ex.com/member/levie" target="_blank" rel="external">levie</a>发表的文章:<a href="https://www.v2ex.com/t/295433" target="_blank" rel="external">Snipaste - 开发了三年的截图工具，但不只是截图</a>或看<a href="https://docs.snipaste.com/zh-cn/" target="_blank" rel="external">官方文档</a>。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">神器</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/01/适合安全爱好者的截图神器/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Tor-Privoxy实现匿名" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/12/Tor-Privoxy实现匿名/">Tor+Privoxy实现匿名</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/12/Tor-Privoxy实现匿名/" class="archive-article-date">
-  	<time datetime="2018-03-11T16:31:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>渗透测试过程中，最让我寒心的是。仅仅测试了单引号，就把我ip拉黑。接下来就是用大量的代理进行测试，如果代理ip很少。那么就不能在继续渗透你的站点。通过搜索引擎发现一个神器 – Tor。</p>
-<h2 id="0x01-神器介绍"><a href="#0x01-神器介绍" class="headerlink" title="0x01 神器介绍"></a>0x01 神器介绍</h2><p><strong>No.1-Tor</strong><br>官方介绍：Tor是免费软件和开放网络，它帮助您抵御流量分析，威胁个人自由和隐私、机密商业活动和关系以及国家安全的网络监视形式。<br>俗话：Tor可以在不还钱的情况下保护个人隐私。<br><a href="https://www.torproject.org/" target="_blank" rel="external">官方</a></p>
-<p><strong>No.2-Privoxy</strong><br>官方介绍：Privoxy是一款带过滤功能的代理服务器，针对HTTP、HTTPS协议。通过Privoxy的过滤功能，用户可以保护隐私、对网页内容进行过滤、管理cookies，以及拦阻各种广告等。Privoxy可以用作单机，也可以应用到多用户的网络。<br>俗话：将socks代理转换成为http代理和广告过滤的工具。<br><a href="https://www.privoxy.org/" target="_blank" rel="external">官方</a></p>
-<h2 id="0x02-环境搭建"><a href="#0x02-环境搭建" class="headerlink" title="0x02 环境搭建"></a>0x02 环境搭建</h2><p>Tor和Privoxy的安装过程在此不在讲解.安装Tor后，如果使用TorBrowser工具就已经可以做到访问任意网页时，每次的ip都是随机的。接下来主要讲解如何让系统中的所有浏览器都走Tor代理流量。<br><strong>OSX</strong><br>在查找资料的时候遇到了一个坑，配置Privoxy的时，<code>forward-socks4a</code>的本地端口会填写<code>9050</code>。然而在实际测试的时候，这个端口其实是不开放的，真正开放的端口是<code>9150</code>。<br>Privoxy配置文件路径：<code>/usr/local/etc/privoxy/config</code>。在配置中添加如下命令：<br><code>forward-socks4a / 127.0.0.1:9050 .</code><br>其实<code>forward-socks4a</code>是命令项，<code>/</code>表示对所有站点进行同样的配置，<code>127.0.0.1:9050</code>表示代理的是Tor的socks端口。</p>
-<p><strong>注意：</strong><br>该命令最后存在一个<code>.</code>。该点表示没有http设置，如果去掉会报错。<br>下一步是配置网络代理，具体如下图：<br><img src="/2018/03/12/Tor-Privoxy实现匿名/1.png" alt="ByPupil" title="ByPupil"><br>此时，使用任意浏览器都可以在每次访问网页时使用不同IP。</p>
-<h6 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h6><p><a href="http://www.cppblog.com/riverbeast/archive/2007/11/18/36866.html" target="_blank" rel="external">Tor+Privoxy黄金搭档</a><br><a href="http://www.cppblog.com/riverbeast/archive/2007/11/18/36869.html" target="_blank" rel="external">单独使用Privoxy</a><br><a href="http://thehiddenwiki.org/" target="_blank" rel="external">Hidden Wiki .onion Urls Tor Link Directory</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">渗透测试</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/12/Tor-Privoxy实现匿名/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-WSL初体验" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/11/WSL初体验/">WSL初体验</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/11/WSL初体验/" class="archive-article-date">
-  	<time datetime="2017-12-11T05:14:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="WSL-体验"><a href="#WSL-体验" class="headerlink" title="WSL 体验"></a>WSL 体验</h1><h3 id="WSL-简介"><a href="#WSL-简介" class="headerlink" title="WSL 简介"></a>WSL 简介</h3><p>WSL（Windows System for Linux）是一个为在Windows 10上能够原生运行Linux二进制可执行文件（ELF格式）的兼容。</p>
-<h3 id="WSL-安装"><a href="#WSL-安装" class="headerlink" title="WSL 安装"></a>WSL 安装</h3><p>安装WSL的时候遇到了一些坑，一直以为只要是Windows10以上的任意版本的系统都是可以完美的安装。眼瞎的我，就跳了进去。其实在<a href="https://docs.microsoft.com/zh-cn/windows/wsl/install-win10" target="_blank" rel="external">微软官网</a>上已经强调必须是<strong>build 16215</strong>版本或者更新。</p>
-<p><strong>1.启动Linux子系统</strong> </p>
-<ol>
-<li>系统升级到一周年正式版及以上(1607)</li>
-<li>依次在 设置 - 更新与安全 - 针对开发人员 选项中，启用”开发人员模式”</li>
-<li>在资源管理器中打开 控制面板\所有控制面板项\程序和功能 , 打开 启用或关闭 Windows功能 , 勾选 适用于Linux的Windows子系统(Beta)</li>
-<li>重启电脑</li>
-<li>命令行运行 lxrun /install /y 开始安装<br>安装速度取决于网络情况，下载的文件在 %localappdata%\lxss 目录下 lxss.tar.gz (181M)，解压后大概500M, rootfs 目录即为子系统根目录。</li>
-<li>命令行运行 bash 进入Ubuntu默认使用的 root 帐号登录，通过指令 passwd 设置密码。</li>
-<li>毕竟爱折腾，难免会把子系统环境(lxss目录)玩坏掉，因此干正事前最好先备份下以便快速还原。注意，不要直接右键复制或者打包，可能会导致文件权限丢失的。<br>xcopy %localappdata%\lxss %localappdata%\lxss.bak /E</li>
-<li>当然，如果你比较任性也可以不执行上一步的备份操作，通过命令行运行 lxrun /uninstall /full 轻松卸载子系统，重复上面的步骤即可重装，不过要注意下载速度时好时坏哦。</li>
-</ol>
-<p><strong>使用Power shell开启WSL选项方法：</strong>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</p>
-<img src="/2017/12/11/WSL初体验/1.png" alt="ByPupil" title="ByPupil">
-<img src="/2017/12/11/WSL初体验/2.png" alt="ByPupil" title="ByPupil">
-<img src="/2017/12/11/WSL初体验/3.png" alt="ByPupil" title="ByPupil">
-<img src="/2017/12/11/WSL初体验/4.png" alt="ByPupil" title="ByPupil">
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://docs.microsoft.com/zh-cn/windows/wsl/install-win10" target="_blank" rel="external">https://docs.microsoft.com/zh-cn/windows/wsl/install-win10</a></p>
-<p><a href="http://www.jianshu.com/p/bc38ed12da1d" target="_blank" rel="external">http://www.jianshu.com/p/bc38ed12da1d</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Windows工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/11/WSL初体验/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Android软件分析中的的Hello-Word" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/19/Android软件分析中的的Hello-Word/">Android软件分析中的的Hello Word</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/19/Android软件分析中的的Hello-Word/" class="archive-article-date">
-  	<time datetime="2017-11-19T09:23:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>最近开始学习apk分析相关的知识，在分析apk中需要不断重复又十分钟的反编译，修改程序，编译，为apk增加签名的步骤进行讲解。这也是方便自己和他人，在问起apk相关问题时，遇到基础步骤时就不需要在一次又一次的讲解，同过以下的一个实验操作去理解反编译，重打包的过程。</p>
-<h3 id="0x01-准备"><a href="#0x01-准备" class="headerlink" title="0x01 准备"></a>0x01 准备</h3><ol>
-<li>Android模拟器</li>
-<li>apktool</li>
-<li>Android逆向工具</li>
-<li>notepad++</li>
-<li>Hello World（apk程序，该程序根据《Android软件安全与逆向分析》第二章编写）</li>
-</ol>
-<h3 id="0x02-模拟器使用"><a href="#0x02-模拟器使用" class="headerlink" title="0x02 模拟器使用"></a>0x02 模拟器使用</h3><p>该文章在做实验时所使用的模拟器（逍遥安卓模拟器）。对于该程序安装过程不在讲解。启动软件，该模拟器启动之后的截图如下：</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/1.png" alt="ByPupil" title="ByPupil">
-<p>安装程序如下：</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/2.png" alt="ByPupil" title="ByPupil">
-<p>打开该程序后，我尝试输入用户名和注册码,该程序会返回无效用户名或密码，因为我们并不了解该程序的加密方式。</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/3.png" alt="ByPupil" title="ByPupil">
-<h3 id="0x03-反编译apk文件"><a href="#0x03-反编译apk文件" class="headerlink" title="0x03 反编译apk文件"></a>0x03 反编译apk文件</h3><p>对于反编译apk文件有很多种的方法和工具，在此教程中使用的时apktool。基本用法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">反编译apk文件的命令：apktool d[ecode] [OPTS] &lt;file.apk&gt; [&lt;dir&gt;]</div><div class="line">编译apk文件的命令：apktool b[uild] [OPTS] [&lt;app_path&gt;] [&lt;out_file&gt;]</div></pre></td></tr></table></figure></p>
-<p>此处我们使用：<code>apktool d HelloWorld.apk</code>。执行之后会在当前目录下生成名称为HelloWorld的目录。</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/4.png" alt="ByPupil" title="ByPupil">
-<p>反编译后的目录结构如下：</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/5.png" alt="ByPupil" title="ByPupil">
-<h3 id="0x04-分析apk文件"><a href="#0x04-分析apk文件" class="headerlink" title="0x04 分析apk文件"></a>0x04 分析apk文件</h3><p>反编译生成的文件生成了一系列的目录与文件，其中smali目录下存放了程序所有的反汇编代码，res目录则是程序中所有的资源文件。对于突破该程序的破解，是否还记得刚才程序提示的无效用户名或注册码。通过寻找在<code>res/values/strings.xml</code>文件中找到了该字符串，且在<code>res/values/public.xml</code>文件中找到该字符串所对应的id。</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/6.png" alt="ByPupil" title="ByPupil">
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/7.png" alt="ByPupil" title="ByPupil">
-<p>接着对smali目录下的文件进行搜索字符串<code>0x7f05000b</code>，在<code>smali/com/droider/crackme0201/MainActivity$1.smali</code>中找到了该字符串。</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/8.png" alt="ByPupil" title="ByPupil">
-<p>回溯该文件，在该文件第96行存在if判断，语句如下：<code>if-nez v0, :cond_0</code>。该语句的作用是当v0不为0是跳转到<code>:cond_0</code>处。为了让其判断为0时也进行跳转，我们将其修改为<code>if-eqz v0, :cond_0</code>。使其跳转到<code>:cond_0</code>，此处我们发现了<code>const v1, 0x7f05000c</code>，我们通过搜索<code>public.xml</code>和<code>strings.xml</code>后，发现其值的实际意义为：<code>恭喜您！注册成功</code>。修改后的代码如下：</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/9.png" alt="ByPupil" title="ByPupil">
-<h3 id="0x05-重新编译apk文件并签名"><a href="#0x05-重新编译apk文件并签名" class="headerlink" title="0x05 重新编译apk文件并签名"></a>0x05 重新编译apk文件并签名</h3><p>使用命令：<code>apktool b HelloWorld</code>，即完成了对该程序的重新编译。重新编译后的apk文件位于dist目录下。</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/10.png" alt="ByPupil" title="ByPupil">
-<p>编译生成为<code>HelloWorld.apk</code>文件是没有签名的，还不能安装测试。接下来使用Android逆向助手为该apk文件进行签名。<br>具体步骤如下：</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/11.png" alt="ByPupil" title="ByPupil">
-<p>生成的文件位于dist目录下，其文件名为：<code>HelloWorld_sign.apk</code>。</p>
-<h3 id="0x06-安装测试"><a href="#0x06-安装测试" class="headerlink" title="0x06 安装测试"></a>0x06 安装测试</h3><p>启动Android模拟器，将重新打包的文件进行安装测试。<br>此时，在该程序中输入任意用户名和注册码都是将提示<code>恭喜您!注册成功</code>。</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/12.png" alt="ByPupil" title="ByPupil">
-<p>这儿说输入任意用户名和注册码都会提示成功，这话有点狂了。上张图瞧瞧：</p>
-<img src="/2017/11/19/Android软件分析中的的Hello-Word/13.png" alt="ByPupil" title="ByPupil">
-<p>如果输入的用户名与注册码是正确的情况下，反而其输出结果是：<code>无效用户名或注册码</code>。<br>具体其加密过程是如何，大家可以自己研究以下，因为这并不难理解。</p>
-<h3 id="0x07-总结"><a href="#0x07-总结" class="headerlink" title="0x07 总结"></a>0x07 总结</h3><p>该文件通过一个实例讲解了Android程序的一般分析与破解流程。学会了这个基础的流程之后才能更好的分析比这个更难更复杂的代码。</p>
-<p><a href="http://pan.baidu.com/s/1bpLcJPd" target="_blank" rel="external">相关材料下载</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/19/Android软件分析中的的Hello-Word/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-中国菜刀在Linux下飞" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/28/中国菜刀在Linux下飞/">中国菜刀在Linux下飞</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/28/中国菜刀在Linux下飞/" class="archive-article-date">
-  	<time datetime="2017-10-28T11:12:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>由于一朋友习惯了ubuntu，突然遇到使用了菜刀连接webshell的时候无奈了。先推荐他使用了<code>weevely</code>连接webshell，但是只能连接php。晚上的时候找了些资料，发现可以使用<code>wine</code>让菜刀在<code>Linux</code>中跑起来。</p>
-<h3 id="0x01-准备"><a href="#0x01-准备" class="headerlink" title="0x01 准备"></a>0x01 准备</h3><ol>
-<li>Kali 2.0</li>
-<li>中国菜刀</li>
-</ol>
-<h3 id="0x02-开始动手"><a href="#0x02-开始动手" class="headerlink" title="0x02 开始动手"></a>0x02 开始动手</h3><p>想也不用想第一步当然是需要将<code>wine</code>安装进系统，然而系统中已经安装了<code>wine</code>。我使用的kali是2017版本的，已经安装的<code>wine</code>的版本是<code>2.0.2</code>。</p>
-<p>第二步是需要安装<code>winetricks</code>。通过命令<code>apt-get install winetricks</code>即可完成<code>winetricks</code>的安装。然后安装菜刀需要的一些dll库。需要安装的类库如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.mfc42</div><div class="line">2.mdac28</div><div class="line">3.jet40</div><div class="line">4.vb6run</div></pre></td></tr></table></figure>
-<p>在正式开始安装这些程序之前会提示需要安装<code>wine32</code>。然后给出了一条命令解决方案。</p>
-<p><code>dpkg --add-architecture i386 &amp;&amp; apt-get update &amp;&amp; apt-get install wine32</code></p>
-<p>安装完之后我们就可以依次执行以下命令安装依赖包。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. winetricks mfc42</div><div class="line">2. winetricks mdac28</div><div class="line">3. winetricks jet40</div><div class="line">4. winetricks vb6ru</div></pre></td></tr></table></figure>
-<p>安装完相关的依赖包之后，就可以将菜刀复制到<code>kali</code>中了。使用命令<code>wine caidao.exe</code>。就可以执行菜刀。</p>
-<p>别说读书少，我骗人。有图有真相，┑(￣▽ ￣)┍。</p>
-<img src="/2017/10/28/中国菜刀在Linux下飞/1.png" alt="ByPupil" title="ByPupil">
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/28/中国菜刀在Linux下飞/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-曾经就该做的程序设计-LeetCode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/22/曾经就该做的程序设计-LeetCode/">曾经就该做的程序设计--LeetCode</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/22/曾经就该做的程序设计-LeetCode/" class="archive-article-date">
-  	<time datetime="2017-10-22T08:16:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h3><p>我是连数据结构还不怎么扎实的菜鸡，写程序也不考虑时间复杂度，辅助变量占用了多少程序。只要完成自己的需求就可以了。然而重回大一时，老师所说的程序首先需要满足以下几点：</p>
-<ul>
-<li>有穷性</li>
-<li>确定性</li>
-<li>可行性</li>
-<li>输入</li>
-<li>输出</li>
-</ul>
-<p>对于一个可以满足需求的程序是可以满足以上五点要求的。其实不然，一个好的程序，依然还需要考虑的是高效率和低存储。看着之前的代码，本可O(n)解决的写成了O(n^2)。纪念我如此之蠢，开始LeetCode的刷题和学习之路。</p>
-<p>本文所使用的所有代码全部使用<code>Python</code>语言编写，代码是根据自己理解和互联网上查找资料，写下自己觉得比较好的代码。</p>
-<h3 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h3><p><strong>1. Two Sum</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">twoSum</span><span class="params">(nums, target)</span>:</span></div><div class="line">  <span class="string">"""</span></div><div class="line"><span class="string">  :type nums: List[int]</span></div><div class="line"><span class="string">  :type target: int</span></div><div class="line"><span class="string">  :rtype List[int]</span></div><div class="line"><span class="string">  """</span></div><div class="line">  <span class="keyword">for</span> i, first <span class="keyword">in</span> enumerate(nums):</div><div class="line">    second = target - first</div><div class="line">    <span class="keyword">if</span> second <span class="keyword">in</span> nums[i+<span class="number">1</span>:]:</div><div class="line">      j = nums[i+<span class="number">1</span>:].index(second) + i + <span class="number">1</span></div><div class="line">      <span class="keyword">return</span> [i, j]</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">twoSum</span><span class="params">(nums, target)</span>:</span></div><div class="line">  <span class="string">"""</span></div><div class="line"><span class="string">  :type nums: List[int]</span></div><div class="line"><span class="string">  :type target: int</span></div><div class="line"><span class="string">  :rtype List[int]</span></div><div class="line"><span class="string">  """</span></div><div class="line">  dic = dict()</div><div class="line">  <span class="keyword">for</span> index, value <span class="keyword">in</span> enumerate(nums):</div><div class="line">    sub = target - value</div><div class="line">    <span class="keyword">if</span> sub <span class="keyword">in</span> dic:</div><div class="line">      <span class="keyword">return</span> [dic[sub], index]</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">      dic[value] = index</div></pre></td></tr></table></figure>
-<p><strong>2. Remove Element</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">removeElement</span><span class="params">(nums, val)</span>:</span></div><div class="line">  j = <span class="number">0</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(nums)):</div><div class="line">    <span class="keyword">if</span> nums[i] == val:</div><div class="line">      <span class="keyword">continue</span></div><div class="line">    nums[j] = nums[i]</div><div class="line">    j++</div><div class="line">  <span class="keyword">return</span> j</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">程序设计</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/22/曾经就该做的程序设计-LeetCode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -1251,8 +445,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
